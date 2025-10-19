@@ -19,7 +19,6 @@ const SwitcherComponent = () => {
     <select value={locale} onChange={e => switchLocale(e.target.value)}>
         <option value={"en"}>EN</option>
         <option value={"id"}>ID</option>
-        <option value={"zh"}>ZH</option>
     </select>
   )
 }

@@ -9,15 +9,32 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({locale}))
 }
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const geist = Geist({
   subsets: ["latin"],
-});
+  display: "swap",
+  variable: "--font-sans",
+  fallback: [
+    "Inter",
+    "-apple-system",
+    "BlinkMacSystemFont",
+    "Segoe UI",
+    "Roboto",
+    "Oxygen",
+    "Ubuntu",
+    "Cantarell",
+    "Fira Sans",
+    "Droid Sans",
+    "Helvetica Neue",
+    "sans-serif",
+  ],
+})
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
   subsets: ["latin"],
-});
+  display: "swap",
+  variable: "--font-mono",
+  fallback: ["monaco", "monospace"],
+})
 
 export const metadata = {
   title: "Create Next App",

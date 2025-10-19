@@ -6,10 +6,18 @@ const HYGRAPH_ENDPOINT = 'https://ap-south-1.cdn.hygraph.com/content/cmguqxtwt00
 const graphQLClient = new GraphQLClient(HYGRAPH_ENDPOINT);
 
 export async function GET(request) {
+  // Get locale from query parameters
+  const { searchParams } = new URL(request.url);
+  let locale = searchParams.get('locale') || 'en';
+  if (locale === 'id') {
+    locale = 'id_ID';
+  }
+  console.log('locale', locale);
+  
   try {
     const query = gql`
-   query MyQuery {
-  caseStuide {
+  query MyQuery {
+  caseStuide(locales: ${locale}) {
     images {
       url
     }
