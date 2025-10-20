@@ -1,40 +1,19 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import {NextIntlClientProvider, hasLocale} from 'next-intl';
+import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
-import {routing} from '@/i18n/routing';
+import { routing } from "@/i18n/routing";
 import { setRequestLocale } from "next-intl/server";
 
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({locale}))
+  return routing.locales.map((locale) => ({ locale }));
 }
 
-const geist = Geist({
+const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-sans",
-  fallback: [
-    "Inter",
-    "-apple-system",
-    "BlinkMacSystemFont",
-    "Segoe UI",
-    "Roboto",
-    "Oxygen",
-    "Ubuntu",
-    "Cantarell",
-    "Fira Sans",
-    "Droid Sans",
-    "Helvetica Neue",
-    "sans-serif",
-  ],
-})
-
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-mono",
-  fallback: ["monaco", "monospace"],
-})
+});
 
 export const metadata = {
   title: "Create Next App",
@@ -42,9 +21,8 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children, params }) {
-
-  const {locale} = await params;
-  if(!hasLocale(routing.locales, locale)) {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
 
@@ -52,12 +30,8 @@ export default async function RootLayout({ children, params }) {
 
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-         <NextIntlClientProvider>
-        {children}
-         </NextIntlClientProvider>
+      <body className={`${inter.variable} antialiased`}>
+        <NextIntlClientProvider>{children}</NextIntlClientProvider>
       </body>
     </html>
   );
