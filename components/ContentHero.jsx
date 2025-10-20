@@ -10,9 +10,10 @@ export default function ContentHero() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="text-center lg:text-left">
           {/* Main Headline */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl  lg:text-6xl xl:text-7xl  text-primary mb-4 sm:mb-6 leading-tight font-extralight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl  lg:text-6xl xl:text-7xl text-white/85  mb-4 sm:mb-6 leading-tight font-extralight">
             <i className="font-sentient tracking-[-5] font-normal">The Art </i>{" "}
-            of Unlocking <br /> Success Beyond Borders
+            of Unlocking <br /> Success{" "}
+            <span className="font-bold tracking-[-2]">Beyond Borders</span>
           </h1>
 
           {/* Description */}
@@ -27,7 +28,7 @@ export default function ContentHero() {
           <div className="mb-8 sm:mb-12 lg:mb-16">
             <Button
               size="lg"
-              className="bg-white text-gray-800 hover:bg-gray-100 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-medium rounded-full group w-full sm:w-auto"
+              className="bg-primary/90 border-orange-200 border-[2px] backdrop-blur-sm text-gray-800 px-8 hover:border-amber-50 hover:bg-gray-100 sm:text-lg font-bold rounded-full group w-full sm:w-auto uppercase"
             >
               Get started
               <ArrowUpRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-200" />

@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-
+import { SpinningText } from "./ui/spinning-text";
 
 export default function Hero({
   children,
@@ -30,17 +30,17 @@ export default function Hero({
           <source src={videoUrl} type="video/webm" />
           Your browser does not support the video tag.
         </video>
-        <div
-          className={cn(
-            "relative",
-            className
-          )}
-        >
-          {children}
-        </div>
+        <div className={cn("relative", className)}>{children}</div>
       </div>
 
-     
+      <SpinningText
+        reverse
+        className="text-2xl font-light text-white absolute bottom-[250px] right-[250px] z-[99]"
+        duration={30}
+        radius={6}
+      >
+        learn more • earn more • grow more •
+      </SpinningText>
     </section>
   );
 }

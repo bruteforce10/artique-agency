@@ -1,13 +1,15 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { HamburgerMenu } from "@/components/ui/hamburger-menu";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function NavbarComponent() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const navItems = [
     { name: "Our Services", link: "#projects" },
@@ -16,9 +18,34 @@ export function NavbarComponent() {
     { name: "Blogs", link: "#blogs" },
   ];
 
+  useEffect(() => {
+    const onScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 w-full">
-      <div className="relative w-full max-w-[1200px] mx-auto">
+      {/* animated backdrop when scrolled */}
+      <AnimatePresence>
+        {isScrolled && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.18 }}
+            className="pointer-events-none fixed inset-0 z-40"
+          >
+            <div className="w-full h-16 lg:h-20 bg-white/10 backdrop-blur-md" />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className="relative w-full max-w-[1200px] mx-auto z-50">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <div className="flex items-center space-x-3">
@@ -31,7 +58,7 @@ export function NavbarComponent() {
                 width={200}
                 alt="artique-agency"
               />
-              <span className="text-white text-xl font-semibold">
+              <span className="text-white font-bold text-lg">
                 ARTIQUE AGENCY
               </span>
             </div>
@@ -39,7 +66,15 @@ export function NavbarComponent() {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center ">
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-6 py-3">
+            <div
+              className={cn(
+                "px-6 py-3",
+                // when scrolled, keep list merged: no bg / no border and no rounded
+                isScrolled
+                  ? "bg-transparent border-transparent rounded-none"
+                  : "bg-white/10 backdrop-blur-md border border-white/20 rounded-full"
+              )}
+            >
               <div className="flex items-center space-x-8">
                 {navItems.map((item, index) => (
                   <a
@@ -56,7 +91,7 @@ export function NavbarComponent() {
 
           {/* Desktop CTA Button */}
           <div className="hidden lg:flex items-center">
-            <Button className="bg-white text-gray-900 hover:bg-white/90 px-6 py-2 rounded-full font-medium transition-all duration-200">
+            <Button className="bg-white uppercase text-gray-900 hover:bg-white/90 px-6 py-2 rounded-full font-semibold transition-all tracking-wider duration-200">
               Contact us
             </Button>
           </div>
@@ -104,7 +139,7 @@ export function NavbarComponent() {
                   {/* Mobile CTA Button */}
                   <div className="mt-auto mb-6">
                     <Button
-                      className="w-full bg-white text-gray-900 hover:bg-white/90 py-3 rounded-full font-medium transition-all duration-200"
+                      className="w-full bg-white text-gray-900 hover:bg-white/90 py-3 rounded-full font-medium uppercase transition-all duration-200"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       Contact us
