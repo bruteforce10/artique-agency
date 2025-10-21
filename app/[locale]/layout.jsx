@@ -30,7 +30,10 @@ export default async function RootLayout({ children, params }) {
 
   return (
     <html lang="en">
-      <body className={`${inter.variable} antialiased`}>
+      {/* include both the font class and the variable so the font is applied reliably */}
+      <body
+        className={`${inter.className ?? ""} ${inter.variable} antialiased`}
+      >
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
       </body>
     </html>
