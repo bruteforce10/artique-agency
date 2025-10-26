@@ -29,7 +29,7 @@ export function NavbarComponent() {
   }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 w-full">
+    <nav className="fixed max-w-5xl mx-auto top-0 left-0 right-0 z-50 w-full">
       {/* animated backdrop when scrolled */}
       <AnimatePresence>
         {isScrolled && (
@@ -45,7 +45,7 @@ export function NavbarComponent() {
         )}
       </AnimatePresence>
 
-      <div className="relative w-full max-w-[1200px] mx-auto z-50">
+      <div className="relative w-full max-w-7xl mx-auto z-50">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <div className="flex items-center space-x-3">

@@ -7,17 +7,17 @@ export default function ContentHero() {
   return (
     <section className="w-full">
       {/* Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <div className="w-full">
         <div className="text-center lg:text-left">
           {/* Main Headline */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl  lg:text-6xl xl:text-7xl text-white/85  mb-4 sm:mb-6 leading-tight font-extralight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white/85  mb-4 sm:mb-6 leading-tight font-extralight">
             <i className="font-sentient tracking-[-5] font-normal">The Art </i>{" "}
             of Unlocking <br /> Success{" "}
             <span className="font-bold tracking-[-2]">Beyond Borders</span>
           </h1>
 
           {/* Description */}
-          <p className="text-white/80 sm:text-lg  mb-6 sm:mb-8 max-w-2xl mx-auto lg:mx-0 px-4 sm:px-0">
+          <p className="text-white/80 sm:text-md  mb-6 sm:mb-8 max-w-2xl mx-auto lg:mx-0 px-4 sm:px-0">
             At Artique, we believe that creativity has no bounds, and we are
             committed to helping our clients unlock the full potential of their
             ideas. We work closely with them to bring their vision to life,
