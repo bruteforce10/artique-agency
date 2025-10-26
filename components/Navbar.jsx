@@ -29,7 +29,7 @@ export function NavbarComponent() {
   }, []);
 
   return (
-    <nav className="fixed max-w-5xl mx-auto top-0 left-0 right-0 z-50 w-full">
+    <nav className="fixed max-w-5xl mx-auto top-0 left-0 right-0 z-60 w-full">
       {/* animated backdrop when scrolled */}
       <AnimatePresence>
         {isScrolled && (

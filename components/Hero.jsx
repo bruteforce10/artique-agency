@@ -13,7 +13,7 @@ export default function Hero({
       <div
         className={cn(
           classNameContainer,
-          "relative h-[400px] sm:min-h-[calc(80vh-3.5rem)] z-[2] flex flex-col justify-center w-full overflow-hidden"
+          "relative h-[400px] sm:min-h-[calc(80vh-3.5rem)] z-[2] flex flex-col justify-center w-full "
         )}
       >
         {/* <div className="w-full h-1/7 border-white/40 border-b-[1.2px] absolute z-[99] top-0" />

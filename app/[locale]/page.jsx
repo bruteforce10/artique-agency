@@ -1,3 +1,4 @@
+import AboutSection from "@/components/AboutSection";
 import ContentHero from "@/components/ContentHero";
 import Hero from "@/components/Hero";
 import { NavbarComponent } from "@/components/Navbar";
@@ -9,13 +10,14 @@ export default function Home() {
 
       <Hero
         videoUrl={"/bg-video.webm"}
-        classNameContainer={"sm:h-[calc(100vh-3.5rem)] max-sm:h-screen"}
+        classNameContainer={"sm:h-[calc(100vh-1.5rem)] max-sm:h-screen"}
         className={
           "sm:h-[360px] max-sm:h-[255px] max-w-5xl mt-12 mx-auto w-full"
         }
       >
         <ContentHero />
       </Hero>
+      <AboutSection />
     </div>
   );
 }
