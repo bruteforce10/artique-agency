@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { motion, useScroll, useTransform } from "motion/react";
 
@@ -13,12 +13,53 @@ export default function WhyChooseUs({
   backgroundImage = "/bg.webp",
 }) {
   const sectionRef = useRef(null);
+
+  // Responsive breakpoints + reduced-motion
+  const [bp, setBp] = useState("lg");
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const compute = () => {
+      const w = window.innerWidth;
+      setBp(w < 640 ? "sm" : w < 1024 ? "md" : "lg");
+    };
+    const rm = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduced(rm.matches);
+    rm.addEventListener?.("change", (e) => setReduced(e.matches));
+    compute();
+    window.addEventListener("resize", compute, { passive: true });
+    return () => window.removeEventListener("resize", compute);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
   });
-  const y = useTransform(scrollYProgress, [0, 1], [-120, 120]);
-  const yLeft = useTransform(scrollYProgress, [0, 1], [100, -140]);
+  // Parallax ranges by breakpoint
+  const rangeBg = reduced
+    ? [0, 0]
+    : bp === "sm"
+    ? [-80, 80]
+    : bp === "md"
+    ? [-160, 160]
+    : [-240, 240];
+  const rangeLeft = reduced
+    ? [0, 0]
+    : bp === "sm"
+    ? [60, -80]
+    : bp === "md"
+    ? [120, -180]
+    : [200, -300];
+  const scaleRange = reduced
+    ? [1, 1]
+    : bp === "sm"
+    ? [1.04, 1.1]
+    : bp === "md"
+    ? [1.06, 1.14]
+    : [1.08, 1.18];
+
+  const y = useTransform(scrollYProgress, [0, 1], rangeBg);
+  const yLeft = useTransform(scrollYProgress, [0, 1], rangeLeft);
+  const scaleBg = useTransform(scrollYProgress, [0, 1], scaleRange);
 
   return (
     <section
@@ -30,7 +71,7 @@ export default function WhyChooseUs({
         className="absolute inset-0 -z-10"
         style={{
           y,
-          scale: 1.05,
+          scale: scaleBg,
           backgroundImage: `url(${backgroundImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
