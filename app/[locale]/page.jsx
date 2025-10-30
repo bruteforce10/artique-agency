@@ -2,6 +2,7 @@ import AboutSection from "@/components/AboutSection";
 import ContentHero from "@/components/ContentHero";
 import Hero from "@/components/Hero";
 import { NavbarComponent } from "@/components/Navbar";
+import WhyChooseUs from "@/components/WhyChooseUs";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
         <ContentHero />
       </Hero>
       <AboutSection />
+      <WhyChooseUs />
     </div>
   );
 }
