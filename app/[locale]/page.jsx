@@ -2,6 +2,7 @@ import AboutSection from "@/components/AboutSection";
 import ContentHero from "@/components/ContentHero";
 import Hero from "@/components/Hero";
 import { NavbarComponent } from "@/components/Navbar";
+import ProjectSection from "@/components/ProjectSection";
 import WhyChooseUs from "@/components/WhyChooseUs";
 
 export default function Home() {
@@ -20,6 +21,7 @@ export default function Home() {
       </Hero>
       <AboutSection />
       <WhyChooseUs />
+      <ProjectSection />
     </div>
   );
 }

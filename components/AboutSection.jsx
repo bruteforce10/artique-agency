@@ -31,7 +31,7 @@ const AboutSection = () => {
 
       <div className="max-w-5xl mx-auto w-full px-6 sm:px-8">
         <div className="text-center">
-          <span className="text-sm text-gray-400 tracking-wider">About</span>
+          <span className="text-sm text-gray-400 tracking-wider">ABOUT</span>
         </div>
 
         {/* description — large, light-gray, centered and constrained width */}
