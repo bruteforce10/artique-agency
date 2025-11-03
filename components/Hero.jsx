@@ -1,6 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { SpinningText } from "./ui/spinning-text";
+import { useNavbarSection } from "./NavbarContext";
 
 export default function Hero({
   children,
@@ -8,8 +9,10 @@ export default function Hero({
   className,
   classNameContainer,
 }) {
+  const heroRef = useNavbarSection("hero", true);
+  
   return (
-    <section>
+    <section ref={heroRef}>
       <div
         className={cn(
           classNameContainer,

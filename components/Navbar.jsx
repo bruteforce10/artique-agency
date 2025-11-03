@@ -6,10 +6,12 @@ import { HamburgerMenu } from "@/components/ui/hamburger-menu";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavbarColor } from "./NavbarContext";
 
 export function NavbarComponent() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { navbarColor } = useNavbarColor();
 
   const navItems = [
     { name: "Our Services", link: "#projects" },
@@ -58,7 +60,7 @@ export function NavbarComponent() {
                 width={200}
                 alt="artique-agency"
               />
-              <span className="text-white font-bold text-lg">
+              <span className={cn("font-bold text-lg transition-colors", navbarColor === "black" ? "text-black" : "text-white")}>
                 ARTIQUE AGENCY
               </span>
             </div>
@@ -80,7 +82,10 @@ export function NavbarComponent() {
                   <a
                     key={index}
                     href={item.link}
-                    className="text-white hover:text-white/80 transition-colors duration-200 text-sm font-medium"
+                    className={cn(
+                      "hover:opacity-80 transition-colors duration-200 text-sm font-medium",
+                      navbarColor === "black" ? "text-black" : "text-white"
+                    )}
                   >
                     {item.name}
                   </a>
@@ -101,7 +106,7 @@ export function NavbarComponent() {
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
                 <button className="p-2">
-                  <HamburgerMenu isOpen={isMobileMenuOpen} />
+                  <HamburgerMenu isOpen={isMobileMenuOpen} color={navbarColor} />
                 </button>
               </SheetTrigger>
               <SheetContent

@@ -1,8 +1,10 @@
 "use client";
 import React from "react";
 import { CardAbout } from "./CardAbout";
+import { useNavbarSection } from "./NavbarContext";
 
 const AboutSection = () => {
+  const sectionRef = useNavbarSection("about", false);
   const cardData = [
     {
       title: "MISSION",
@@ -26,7 +28,10 @@ const AboutSection = () => {
   ];
 
   return (
-    <section className="-mt-6 relative z-[50] rounded-3xl bg-white pt-20 w-full">
+    <section
+      ref={sectionRef}
+      className="-mt-6 relative z-[50] rounded-3xl bg-white pt-20 w-full"
+    >
       <div className="w-24 h-1 inset-x-0 mx-auto absolute top-4 bg-gray-300 rounded-full" />
 
       <div className="max-w-5xl mx-auto w-full px-6 sm:px-8">

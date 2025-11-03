@@ -3,7 +3,7 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-function HamburgerMenu({ isOpen, className, ...props }) {
+function HamburgerMenu({ isOpen, className, color = "white", ...props }) {
   // Render a non-interactive container so the component can be used inside
   // another interactive element (e.g. a button) without creating nested
   // <button> elements which are invalid HTML and break hydration.
@@ -18,19 +18,22 @@ function HamburgerMenu({ isOpen, className, ...props }) {
     >
       <span
         className={cn(
-          "block w-5 h-0.5 bg-white transition-all duration-300 ease-in-out",
+          "block w-5 h-0.5 transition-all duration-300 ease-in-out",
+          color === "black" ? "bg-black" : "bg-white",
           isOpen && "rotate-45 translate-y-1.5"
         )}
       />
       <span
         className={cn(
-          "block w-5 h-0.5 bg-white transition-all duration-300 ease-in-out",
+          "block w-5 h-0.5 transition-all duration-300 ease-in-out",
+          color === "black" ? "bg-black" : "bg-white",
           isOpen && "opacity-0"
         )}
       />
       <span
         className={cn(
-          "block w-5 h-0.5 bg-white transition-all duration-300 ease-in-out",
+          "block w-5 h-0.5 transition-all duration-300 ease-in-out",
+          color === "black" ? "bg-black" : "bg-white",
           isOpen && "-rotate-45 -translate-y-1.5"
         )}
       />

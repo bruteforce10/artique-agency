@@ -6,6 +6,7 @@ import {
   ScrollVelocityContainer,
   ScrollVelocityRow,
 } from "@/components/ui/scroll-based-velocity";
+import { useNavbarSection } from "./NavbarContext";
 
 const clients = [
   { name: "Erspo", logo: "/logo-clients/erspo.avif" },
@@ -15,8 +16,13 @@ const clients = [
 ];
 
 export default function ProjectSection() {
+  const sectionRef = useNavbarSection("projects", false);
+
   return (
-    <section className="relative bg-neutral-200 w-full overflow-hidden">
+    <section
+      ref={sectionRef}
+      className="relative bg-neutral-200 w-full overflow-hidden"
+    >
       <div className="absolute inset-x-0 top-36">
         <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
           <ScrollVelocityContainer>

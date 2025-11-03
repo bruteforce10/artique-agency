@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { motion, useScroll, useTransform } from "motion/react";
+import { useNavbarSection } from "./NavbarContext";
 
 /**
  * WhyChooseUs section with:
@@ -12,7 +13,7 @@ export default function WhyChooseUs({
   className,
   backgroundImage = "/bg.webp",
 }) {
-  const sectionRef = useRef(null);
+  const sectionRef = useNavbarSection("why-choose-us", true);
 
   // Responsive breakpoints + reduced-motion
   const [bp, setBp] = useState("lg");
