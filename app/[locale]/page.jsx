@@ -1,4 +1,5 @@
 import AboutSection from "@/components/AboutSection";
+import CaseStudiesSection from "@/components/CaseStudiesSection";
 import ContentHero from "@/components/ContentHero";
 import Hero from "@/components/Hero";
 import { NavbarComponent } from "@/components/Navbar";
@@ -24,6 +25,7 @@ export default function Home() {
         <AboutSection />
         <WhyChooseUs />
         <ProjectSection />
+        <CaseStudiesSection />
       </div>
     </NavbarProvider>
   );
