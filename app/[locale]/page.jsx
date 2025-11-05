@@ -10,7 +10,7 @@ import WhyChooseUs from "@/components/WhyChooseUs";
 export default function Home() {
   return (
     <NavbarProvider>
-      <div className="min-h-[100000px]">
+      <div className="">
         <NavbarComponent />
 
         <Hero

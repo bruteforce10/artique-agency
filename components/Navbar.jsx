@@ -31,7 +31,7 @@ export function NavbarComponent() {
   }, []);
 
   return (
-    <nav className="fixed max-w-5xl mx-auto top-0 left-0 right-0 z-60 w-full">
+    <nav className="fixed max-w-5xl mx-auto top-0 left-0 right-0 z-10 w-full">
       {/* animated backdrop when scrolled */}
       <AnimatePresence>
         {isScrolled && (
@@ -60,7 +60,12 @@ export function NavbarComponent() {
                 width={200}
                 alt="artique-agency"
               />
-              <span className={cn("font-bold text-lg transition-colors", navbarColor === "black" ? "text-black" : "text-white")}>
+              <span
+                className={cn(
+                  "font-bold text-lg transition-colors",
+                  navbarColor === "black" ? "text-black" : "text-white"
+                )}
+              >
                 ARTIQUE AGENCY
               </span>
             </div>
@@ -106,7 +111,10 @@ export function NavbarComponent() {
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
                 <button className="p-2">
-                  <HamburgerMenu isOpen={isMobileMenuOpen} color={navbarColor} />
+                  <HamburgerMenu
+                    isOpen={isMobileMenuOpen}
+                    color={navbarColor}
+                  />
                 </button>
               </SheetTrigger>
               <SheetContent
