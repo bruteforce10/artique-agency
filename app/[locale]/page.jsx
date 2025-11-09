@@ -1,10 +1,12 @@
 import AboutSection from "@/components/AboutSection";
 import CaseStudiesSection from "@/components/CaseStudiesSection";
 import ContentHero from "@/components/ContentHero";
+import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import { NavbarComponent } from "@/components/Navbar";
 import { NavbarProvider } from "@/components/NavbarContext";
 import ProjectSection from "@/components/ProjectSection";
+import PartnerSection from "@/components/PartnerSection";
 import WhyChooseUs from "@/components/WhyChooseUs";
 
 export default function Home() {
@@ -26,6 +28,8 @@ export default function Home() {
         <WhyChooseUs />
         <ProjectSection />
         <CaseStudiesSection />
+        <PartnerSection />
+        <Footer />
       </div>
     </NavbarProvider>
   );
