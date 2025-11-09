@@ -10,7 +10,7 @@ export default function Hero({
   classNameContainer,
 }) {
   const heroRef = useNavbarSection("hero", true);
-  
+
   return (
     <section ref={heroRef}>
       <div
@@ -38,7 +38,7 @@ export default function Hero({
 
       <SpinningText
         reverse
-        className="text-lg font-light text-white absolute bottom-[200px] right-[180px] z-[99]"
+        className="text-lg font-light text-white absolute bottom-[200px] right-[180px] z-[2]"
         duration={30}
         radius={6}
       >

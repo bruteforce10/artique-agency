@@ -30,7 +30,7 @@ const AboutSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="-mt-6 relative z-[50] rounded-3xl bg-white pt-20 w-full"
+      className="-mt-6 relative z-[2] rounded-3xl bg-white pt-20 w-full"
     >
       <div className="w-24 h-1 inset-x-0 mx-auto absolute top-4 bg-gray-300 rounded-full" />
 

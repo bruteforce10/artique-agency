@@ -72,6 +72,28 @@ const CaseStudiesSection = () => {
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
 
+  // Prevent body scroll when popup is open
+  useEffect(() => {
+    if (selectedImage !== null) {
+      // Save current scroll position
+      const scrollY = window.scrollY;
+      // Prevent body scroll
+      document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = "100%";
+
+      return () => {
+        // Restore scroll position when popup closes
+        document.body.style.overflow = "";
+        document.body.style.position = "";
+        document.body.style.top = "";
+        document.body.style.width = "";
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [selectedImage]);
+
   // Auto-loop carousel - continues infinitely without jumping back
   useEffect(() => {
     if (isAutoPlaying) {
@@ -129,6 +151,24 @@ const CaseStudiesSection = () => {
           <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight">
             Case Studies
           </h2>
+          <button className="relative font-medium text-[17px] h-[2.4em] flex items-center overflow-hidden cursor-pointer group mt-12 bg-transparent border-none outline-none">
+            <span className="mr-12 uppercase">More Projects</span>
+            <div className="absolute right-[0.3em] bg-[#FFD800] h-[1.8em] w-[1.8em] rounded-[0.7em] flex items-center justify-center transition-all duration-300 group-hover:w-[calc(100%-0.3em)] active:scale-95">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                className="w-[1.1em] transition-transform duration-300 text-black group-hover:translate-x-[0.1em]"
+              >
+                <path fill="none" d="M0 0h24v24H0z"></path>
+                <path
+                  fill="currentColor"
+                  d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+                ></path>
+              </svg>
+            </div>
+          </button>
         </div>
 
         {/* Carousel Container */}
@@ -195,7 +235,7 @@ const CaseStudiesSection = () => {
                     }}
                     onClick={() => handleImageClick(index)}
                   >
-                    <div className="relative w-full h-[300px] sm:h-[400px] lg:h-[500px] rounded-lg overflow-hidden cursor-pointer group">
+                    <div className="relative w-full aspect-video rounded-lg overflow-hidden cursor-pointer group">
                       {/* Image with parallax zoom effect */}
                       <motion.div
                         className="absolute inset-0"
@@ -301,25 +341,6 @@ const CaseStudiesSection = () => {
             })}
           </div>
         </div>
-
-        <button className="relative font-medium text-[17px] h-[2.4em] flex items-center overflow-hidden cursor-pointer shadow-[inset_0_0_1.6em_-0.6em_#FFD800] group mt-12">
-          <span className="mr-12 uppercase">More Projects</span>
-          <div className="absolute right-[0.3em] bg-[#FFD800] h-[1.8em] w-[1.8em] rounded-[0.7em] flex items-center justify-center transition-all duration-300 group-hover:w-[calc(100%-0.3em)] shadow-[0.1em_0.1em_0.6em_0.2em_#FFD800] active:scale-95">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              width="24"
-              height="24"
-              className="w-[1.1em] transition-transform duration-300 text-black group-hover:translate-x-[0.1em]"
-            >
-              <path fill="none" d="M0 0h24v24H0z"></path>
-              <path
-                fill="currentColor"
-                d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
-              ></path>
-            </svg>
-          </div>
-        </button>
       </section>
 
       {/* Full Screen Popup */}
@@ -329,7 +350,7 @@ const CaseStudiesSection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex items-center justify-center overflow-y-auto"
+            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex items-center justify-center overflow-hidden"
             onClick={closePopup}
           >
             {/* Close Button */}
