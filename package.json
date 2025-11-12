@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "concurrently --raw \"next dev --turbo\" \"i18nexus listen\"",
-    "build": "i18nexus pull && next build",
-    "start": "i18nexus pull && next start"
+    "build": "node scripts/build.js",
+    "start": "next start"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
