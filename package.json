@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently --raw \"next dev --turbo\" \"i18nexus listen\"",
-    "build": "i18nexus pull && next build",
-    "start": "i18nexus pull && next start"
+    "dev": "concurrently --raw \"next dev --turbo\" \"npx i18nexus listen\"",
+    "build": "npx i18nexus pull && next build",
+    "start": "npx i18nexus pull && next start"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
