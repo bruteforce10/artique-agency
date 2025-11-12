@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently --raw \"next dev --turbo\" \"npx i18nexus listen\"",
-    "build": "npx i18nexus pull && next build",
-    "start": "npx i18nexus pull && next start"
+    "dev": "concurrently --raw \"next dev --turbo\" \"i18nexus listen\"",
+    "build": "i18nexus pull && next build",
+    "start": "i18nexus pull && next start"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
@@ -15,7 +15,7 @@
     "clsx": "^2.1.1",
     "graphql": "^16.11.0",
     "graphql-request": "^7.3.1",
-    "i18nexus": "^2.11.0",
+    "i18nexus-cli": "^3.8.2",
     "lucide-react": "^0.546.0",
     "motion": "^12.23.24",
     "next": "15.5.6",
