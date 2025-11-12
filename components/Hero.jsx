@@ -16,7 +16,7 @@ export default function Hero({
       <div
         className={cn(
           classNameContainer,
-          "relative h-[400px] sm:min-h-[calc(80vh-3.5rem)] z-[2] flex flex-col justify-center w-full "
+          "relative h-[400px]  sm:min-h-[calc(80vh-3.5rem)] z-[2] flex flex-col justify-center w-full "
         )}
       >
         {/* <div className="w-full h-1/7 border-white/40 border-b-[1.2px] absolute z-[99] top-0" />
@@ -38,9 +38,9 @@ export default function Hero({
 
       <SpinningText
         reverse
-        className="text-lg font-light text-white absolute bottom-[200px] right-[180px] z-[2]"
+        className="text-lg font-light max-lg:hidden text-white absolute bottom-[200px] right-[180px] z-[2]"
         duration={30}
-        radius={6}
+        radius={8}
       >
         learn more • earn more • grow more •
       </SpinningText>

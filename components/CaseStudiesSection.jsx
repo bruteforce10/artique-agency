@@ -205,6 +205,7 @@ const CaseStudiesSection = () => {
               {infiniteProjects.map((project, index) => {
                 const offset = index - currentIndex;
                 const isActive = offset === 0;
+                // Di mobile (< 640px) selalu tampilkan 1 card
                 const cardsPerView =
                   windowWidth === 0
                     ? 1
@@ -213,6 +214,8 @@ const CaseStudiesSection = () => {
                     : windowWidth >= 640
                     ? 2
                     : 1;
+
+                const isMobile = windowWidth > 0 && windowWidth < 640;
 
                 return (
                   <motion.div
@@ -225,23 +228,40 @@ const CaseStudiesSection = () => {
                     }}
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{
-                      opacity: Math.abs(offset) <= 1 ? 1 : 0.3,
-                      scale: isActive ? 1 : 0.95,
+                      // Di mobile, semua card yang terlihat harus opacity 1 dan scale 1
+                      opacity: isMobile
+                        ? Math.abs(offset) <= 1
+                          ? 1
+                          : 0
+                        : Math.abs(offset) <= 1
+                        ? 1
+                        : 0.3,
+                      scale: isMobile ? 1 : isActive ? 1 : 0.95,
                     }}
                     transition={{ duration: 0.5, ease: "easeInOut" }}
-                    whileHover={{
-                      scale: 1.05,
-                      zIndex: 10,
-                    }}
+                    whileHover={
+                      isMobile
+                        ? {}
+                        : {
+                            scale: 1.05,
+                            zIndex: 10,
+                          }
+                    }
                     onClick={() => handleImageClick(index)}
                   >
                     <div className="relative w-full aspect-video rounded-lg overflow-hidden cursor-pointer group">
-                      {/* Image with parallax zoom effect */}
+                      {/* Image with parallax zoom effect - hanya di desktop */}
                       <motion.div
                         className="absolute inset-0"
                         whileHover={{
                           scale: 1.2,
                           transition: { duration: 0.6, ease: "easeOut" },
+                        }}
+                        style={{
+                          pointerEvents:
+                            windowWidth > 0 && windowWidth < 640
+                              ? "none"
+                              : "auto",
                         }}
                       >
                         <Image
@@ -253,12 +273,12 @@ const CaseStudiesSection = () => {
                         />
                       </motion.div>
 
-                      {/* Overlay gradient */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      {/* Overlay gradient - hidden di mobile, visible di desktop */}
+                      <div className="hidden sm:block absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                      {/* Project name overlay */}
+                      {/* Project name overlay - hidden di mobile, visible di desktop */}
                       <motion.div
-                        className="absolute bottom-0 left-0 right-0 p-6 text-white"
+                        className="hidden sm:block absolute bottom-0 left-0 right-0 p-6 text-white"
                         initial={{ y: 20, opacity: 0 }}
                         whileHover={{ y: 0, opacity: 1 }}
                         transition={{ duration: 0.3 }}
@@ -268,9 +288,9 @@ const CaseStudiesSection = () => {
                         </h3>
                       </motion.div>
 
-                      {/* Expand icon */}
+                      {/* Expand icon - hidden di mobile, visible di desktop */}
                       <motion.div
-                        className="absolute top-4 right-4 w-10 h-10 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        className="hidden sm:flex absolute top-4 right-4 w-10 h-10 bg-black/50 backdrop-blur-sm rounded-full items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                         whileHover={{ scale: 1.1 }}
                       >
                         <Maximize2 className="w-5 h-5 text-white" />

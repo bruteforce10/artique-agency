@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { HamburgerMenu } from "@/components/ui/hamburger-menu";
+import { IoMdMenu } from "react-icons/io";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -31,7 +31,7 @@ export function NavbarComponent() {
   }, []);
 
   return (
-    <nav className="fixed max-w-5xl mx-auto top-0 left-0 right-0 z-10 w-full">
+    <nav className="fixed max-w-5xl max-sm:px-8 max-sm:pt-2 mx-auto top-0 left-0 right-0 z-10 w-full">
       {/* animated backdrop when scrolled */}
       <AnimatePresence>
         {isScrolled && (
@@ -42,7 +42,7 @@ export function NavbarComponent() {
             transition={{ duration: 0.18 }}
             className="pointer-events-none fixed inset-0 z-40"
           >
-            <div className="w-full h-16 lg:h-20 bg-white/10 backdrop-blur-md" />
+            <div className="w-full h-20 lg:h-20 bg-white/10 backdrop-blur-md" />
           </motion.div>
         )}
       </AnimatePresence>
@@ -110,39 +110,31 @@ export function NavbarComponent() {
           <div className="lg:hidden">
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
-                <button className="p-2">
-                  <HamburgerMenu
-                    isOpen={isMobileMenuOpen}
-                    color={navbarColor}
-                  />
+                <button
+                  className={cn(
+                    "p-2 rounded-md transition-colors",
+                    navbarColor === "black"
+                      ? "text-black hover:bg-gray-100"
+                      : "text-white hover:bg-white/10"
+                  )}
+                  aria-label="Toggle menu"
+                >
+                  <IoMdMenu className="w-6 h-6" />
                 </button>
               </SheetTrigger>
               <SheetContent
                 side="right"
-                className="w-80 bg-gray-900/95 backdrop-blur-md border-l border-white/20"
+                className="w-80 bg-gray-200 border-l border-gray-700"
               >
-                <div className="flex flex-col h-full pt-6">
-                  {/* Mobile Logo */}
-                  <div className="flex items-center space-x-3 mb-8">
-                    <div className="w-8 h-8 flex items-center justify-center">
-                      <div className="relative w-6 h-6">
-                        <div className="absolute top-0 left-0 w-3 h-3 bg-white rounded-full opacity-80"></div>
-                        <div className="absolute bottom-0 right-0 w-3 h-3 bg-white rounded-full opacity-60"></div>
-                      </div>
-                    </div>
-                    <span className="text-white text-xl font-semibold">
-                      Elevate
-                    </span>
-                  </div>
-
+                <div className="flex flex-col h-full">
                   {/* Mobile Navigation Links */}
-                  <div className="flex flex-col space-y-6">
+                  <div className="flex flex-col pt-8 space-y-1 flex-1">
                     {navItems.map((item, index) => (
                       <a
                         key={index}
                         href={item.link}
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="text-white hover:text-white/80 transition-colors duration-200 text-lg font-medium py-2"
+                        className="text-gray-800 hover:bg-gray-300/50 transition-colors duration-200 text-base font-medium py-3 px-4"
                       >
                         {item.name}
                       </a>
@@ -150,11 +142,8 @@ export function NavbarComponent() {
                   </div>
 
                   {/* Mobile CTA Button */}
-                  <div className="mt-auto mb-6">
-                    <Button
-                      className="w-full bg-white text-gray-900 hover:bg-white/90 py-3 rounded-full font-medium uppercase transition-all duration-200"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
+                  <div className="px-4 pb-8">
+                    <Button className="bg-white uppercase text-gray-900 hover:bg-white/90 px-6 py-2 rounded-full font-semibold transition-all tracking-wider duration-200 w-full">
                       Contact us
                     </Button>
                   </div>

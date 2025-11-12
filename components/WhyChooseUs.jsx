@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { cn } from "@/lib/utils";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useNavbarSection } from "./NavbarContext";
@@ -13,7 +13,22 @@ export default function WhyChooseUs({
   className,
   backgroundImage = "/bg.webp",
 }) {
-  const sectionRef = useNavbarSection("why-choose-us", true);
+  const navbarSectionRef = useNavbarSection("why-choose-us", true);
+  // Ref object untuk useScroll dari framer-motion
+  const scrollRef = useRef(null);
+
+  // Callback ref untuk menggabungkan kedua ref
+  const setRefs = useCallback(
+    (node) => {
+      // Set ref untuk navbar section (callback ref dari react-intersection-observer)
+      if (navbarSectionRef) {
+        navbarSectionRef(node);
+      }
+      // Set ref untuk scroll (ref object untuk framer-motion)
+      scrollRef.current = node;
+    },
+    [navbarSectionRef]
+  );
 
   // Responsive breakpoints + reduced-motion
   const [bp, setBp] = useState("lg");
@@ -31,9 +46,11 @@ export default function WhyChooseUs({
     return () => window.removeEventListener("resize", compute);
   }, []);
 
+  // useScroll dengan ref object - akan bekerja setelah ref ter-hydrate
   const { scrollYProgress } = useScroll({
-    target: sectionRef,
+    target: scrollRef,
     offset: ["start end", "end start"],
+    layoutEffect: false, // Gunakan useEffect instead of useLayoutEffect untuk menghindari hydration error
   });
   // Parallax ranges by breakpoint
   const rangeBg = reduced
@@ -64,7 +81,7 @@ export default function WhyChooseUs({
 
   return (
     <section
-      ref={sectionRef}
+      ref={setRefs}
       className={cn("relative w-full overflow-hidden mt-24", className)}
     >
       {/* Parallax background using Motion */}
@@ -93,7 +110,7 @@ export default function WhyChooseUs({
           <h2 className="mt-4 text-4xl sm:text-5xl font-semibold text-yellow-400 tracking-tight">
             Why Choose Us?
           </h2>
-          <p className="mt-6 text-white/85 leading-relaxed text-base max-w-2xl">
+          <p className="mt-6 max-sm:text-sm text-white/85 leading-relaxed text-base max-w-2xl">
             Artique collaborates with clients from various countries, including
             Spain, Japan, China, Indonesia, and Malaysia, while overseeing
             projects in six cities: Tokyo, Jakarta, Bali, Malang, Bandung,

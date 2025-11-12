@@ -57,7 +57,7 @@ export default function ProjectSection() {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 sm:px-8 py-24 relative z-10">
+      <div className="max-w-6xl mx-auto px-6 sm:px-8 py-24 relative z-1">
         <h3 className="text-4xl sm:text-5xl font-bold text-gray-800 tracking-tight">
           Our Clients
         </h3>

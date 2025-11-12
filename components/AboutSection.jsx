@@ -41,7 +41,7 @@ const AboutSection = () => {
 
         {/* description — large, light-gray, centered and constrained width */}
         <div className="mt-6">
-          <p className="mx-auto text-right text-lg sm:text-2xl text-gray-500 font-light max-w-3xl leading-relaxed">
+          <p className="mx-auto text-center md:text-right text-lg sm:text-2xl text-gray-500 font-light max-w-3xl leading-relaxed">
             At <span className="font-bold text-gray-800">Artique</span>, we
             believe that{" "}
             <span className="font-bold text-gray-800">
@@ -65,12 +65,18 @@ const AboutSection = () => {
           </p>
         </div>
 
-        <div className="mt-36 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="sm:mt-36 mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {cardData.map((card, index) => {
-            let marginClass = "";
-            if (index === 0) marginClass = "mt-0";
-            else if (index === 1) marginClass = "-mt-10";
-            else if (index === 2) marginClass = "-mt-20";
+            const classes = [];
+
+            // Margin classes
+            if (index === 0) classes.push("lg:mt-0");
+            else if (index === 1) classes.push("lg:-mt-10");
+            else if (index === 2) {
+              classes.push("lg:-mt-20");
+              // Card terakhir full width di tablet dan desktop
+              classes.push("sm:col-span-2 lg:col-span-1");
+            }
 
             return (
               <CardAbout
@@ -78,7 +84,7 @@ const AboutSection = () => {
                 title={card.title}
                 description={card.description}
                 image={card.image}
-                className={marginClass}
+                className={classes.join(" ")}
               />
             );
           })}
