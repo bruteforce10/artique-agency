@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useRef } from "react";
+import React from "react";
 import Image from "next/image";
-import { motion, useInView } from "motion/react";
-import { Button } from "@/components/ui/button";
+import CTASection from "./CTASection";
 
 const artiqueServices = [
   {
@@ -81,24 +80,10 @@ const artiqueServices = [
 ];
 
 const ServicesSection = () => {
-  const ctaRef = useRef(null);
-  const isInView = useInView(ctaRef, { once: true, margin: "-100px" });
-
   return (
     <>
       <section className="w-full py-12 sm:py-16 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Header */}
-          <div className="text-center mb-12 sm:mb-16">
-            <div className="flex items-center justify-center gap-2 text-xs tracking-widest uppercase mb-4">
-              <span className="inline-block w-2.5 h-2.5 bg-yellow-400 rounded-sm animate-pulse" />
-              Our Services
-            </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight">
-              Services
-            </h1>
-          </div>
-
           {/* Services Grid */}
           <div className="space-y-12">
             {artiqueServices.map((service, index) => {
@@ -186,48 +171,7 @@ const ServicesSection = () => {
       </section>
 
       {/* CTA Section */}
-      <section
-        ref={ctaRef}
-        className="relative w-full py-16 sm:py-20 lg:py-24 overflow-hidden"
-      >
-        {/* Background Yellow */}
-        <div className="absolute inset-0 bg-[#FFD800]" />
-
-        {/* Dotted Element Overlay */}
-        <div className="absolute inset-0 opacity-20">
-          <Image
-            src="/element-dotted.webp"
-            alt=""
-            fill
-            className="object-cover"
-            sizes="100vw"
-          />
-        </div>
-
-        {/* Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-center justify-center text-center space-y-8">
-            {/* Text */}
-            <h2 className="text-2xl sm:text-3xl lg:text-3xl font-bold text-gray-900 max-w-4xl">
-              GET AN ESTIMATE FOR YOUR UPCOMING PROJECT
-            </h2>
-
-            {/* Button with Slide-up Animation */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-            >
-              <Button
-                className="bg-black text-[#FFD800] hover:bg-gray-900 px-8 py-6 text-base sm:text-lg font-semibold rounded-md uppercase tracking-wide transition-colors"
-                size="lg"
-              >
-                CONTACT
-              </Button>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      <CTASection />
     </>
   );
 };

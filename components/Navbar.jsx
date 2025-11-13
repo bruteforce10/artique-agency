@@ -14,8 +14,8 @@ export function NavbarComponent() {
   const { navbarColor } = useNavbarColor();
 
   const navItems = [
-    { name: "Our Services", link: "#projects" },
-    { name: "Case Studies", link: "#contact" },
+    { name: "Our Services", link: "/services" },
+    { name: "Case Studies", link: "/projects" },
     { name: "About Us", link: "#about" },
     { name: "Blogs", link: "#blogs" },
   ];
@@ -31,7 +31,7 @@ export function NavbarComponent() {
   }, []);
 
   return (
-    <nav className="fixed max-w-5xl max-sm:px-8 max-sm:pt-2 mx-auto top-0 left-0 right-0 z-10 w-full">
+    <nav className="fixed max-w-5xl max-lg:px-8 max-lg:pt-2 mx-auto top-0 left-0 right-0 z-10 w-full">
       {/* animated backdrop when scrolled */}
       <AnimatePresence>
         {isScrolled && (
