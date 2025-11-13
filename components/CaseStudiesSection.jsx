@@ -174,18 +174,23 @@ const CaseStudiesSection = () => {
         {/* Carousel Container */}
         <div
           ref={carouselRef}
-          className="relative w-full overflow-hidden"
+          className="relative w-full overflow-hidden sm:mx-0"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
           {/* Carousel Track */}
-          <div className="relative overflow-hidden">
+          <div className="relative overflow-hidden w-full">
             <motion.div
-              className="flex gap-4 sm:gap-6 will-change-transform"
+              className="flex gap-0 sm:gap-4 lg:gap-6 will-change-transform"
+              style={{
+                width: windowWidth > 0 && windowWidth < 640 ? "100%" : "auto",
+              }}
               animate={{
                 x:
                   windowWidth === 0
                     ? 0
+                    : windowWidth < 640
+                    ? `-${currentIndex * 100}%`
                     : `-${
                         currentIndex *
                         (100 /
@@ -222,9 +227,11 @@ const CaseStudiesSection = () => {
                     key={`${project.name}-${index}`}
                     className="relative flex-shrink-0"
                     style={{
-                      width: `calc((100% - ${
-                        (cardsPerView - 1) * 1.5
-                      }rem) / ${cardsPerView})`,
+                      width: isMobile
+                        ? "100%"
+                        : `calc((100% - ${
+                            (cardsPerView - 1) * 1.5
+                          }rem) / ${cardsPerView})`,
                     }}
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{
@@ -232,7 +239,7 @@ const CaseStudiesSection = () => {
                       opacity: isMobile
                         ? Math.abs(offset) <= 1
                           ? 1
-                          : 0
+                          : 1
                         : Math.abs(offset) <= 1
                         ? 1
                         : 0.3,

@@ -1,7 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { MapPin, MessageCircle, Mail, Instagram, Linkedin } from "lucide-react";
+import { MapPin } from "lucide-react";
+import { IoLogoWhatsapp } from "react-icons/io";
+import { FaLinkedin } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
+import { AiFillInstagram } from "react-icons/ai";
 
 export default function Footer() {
   return (
@@ -45,7 +49,7 @@ export default function Footer() {
               </h3>
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
-                  <MessageCircle className="w-5 h-5 flex-shrink-0" />
+                  <IoLogoWhatsapp className="w-5 h-5 flex-shrink-0" />
                   <a
                     href="https://wa.me/85256199075"
                     target="_blank"
@@ -56,7 +60,7 @@ export default function Footer() {
                   </a>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Mail className="w-5 h-5 flex-shrink-0" />
+                  <MdEmail className="w-5 h-5 flex-shrink-0" />
                   <a
                     href="mailto:project@artique-agency.com"
                     className="text-sm sm:text-base hover:text-[#FFD800] transition-colors break-all"
@@ -74,7 +78,7 @@ export default function Footer() {
               </h3>
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
-                  <Instagram className="w-5 h-5 flex-shrink-0" />
+                  <AiFillInstagram className="w-5 h-5 flex-shrink-0" />
                   <a
                     href="https://instagram.com/artique_agency"
                     target="_blank"
@@ -85,7 +89,7 @@ export default function Footer() {
                   </a>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Linkedin className="w-5 h-5 flex-shrink-0" />
+                  <FaLinkedin className="w-5 h-5 flex-shrink-0" />
                   <a
                     href="https://linkedin.com/company/artique-agency"
                     target="_blank"
