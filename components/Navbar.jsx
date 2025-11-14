@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavbarColor } from "./NavbarContext";
+import Link from "next/link";
 
 export function NavbarComponent() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -16,7 +17,7 @@ export function NavbarComponent() {
   const navItems = [
     { name: "Our Services", link: "/services" },
     { name: "Case Studies", link: "/projects" },
-    { name: "About Us", link: "#about" },
+    { name: "About Us", link: "/about-us" },
     { name: "Blogs", link: "#blogs" },
   ];
 
@@ -50,9 +51,9 @@ export function NavbarComponent() {
       <div className="relative w-full max-w-7xl mx-auto z-50">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <div className="flex items-center space-x-3">
+
+          <Link href="/">
             <div className="flex items-center space-x-4">
-              {/* Logo Icon */}
               <Image
                 src="/logo.webp"
                 className="w-12 h-auto rounded-sm"
@@ -69,7 +70,7 @@ export function NavbarComponent() {
                 ARTIQUE AGENCY
               </span>
             </div>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center ">

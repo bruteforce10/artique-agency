@@ -14,7 +14,6 @@ export default function Home() {
     <NavbarProvider>
       <div>
         <NavbarComponent />
-
         <Hero
           videoUrl={"/bg-video.webm"}
           classNameContainer={"sm:h-[calc(100vh-1.5rem)] max-sm:h-screen"}

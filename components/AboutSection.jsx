@@ -39,7 +39,6 @@ const AboutSection = () => {
           <span className="text-sm text-gray-400 tracking-wider">ABOUT</span>
         </div>
 
-        {/* description — large, light-gray, centered and constrained width */}
         <div className="mt-6">
           <p className="mx-auto text-center md:text-right text-lg sm:text-2xl text-gray-500 font-light max-w-3xl leading-relaxed">
             At <span className="font-bold text-gray-800">Artique</span>, we
@@ -68,7 +67,6 @@ const AboutSection = () => {
         <div className="sm:mt-36 mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {cardData.map((card, index) => {
             const classes = [];
-
             // Margin classes
             if (index === 0) classes.push("lg:mt-0");
             else if (index === 1) classes.push("lg:-mt-10");

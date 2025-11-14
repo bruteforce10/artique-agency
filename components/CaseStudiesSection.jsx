@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
 import { X, ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
+import { useNavbarSection } from "./NavbarContext";
 
 const projects = [
   {
@@ -39,6 +40,7 @@ const projects = [
 ];
 
 const CaseStudiesSection = () => {
+  const sectionRef = useNavbarSection("case-studies", false);
   // Start at a high index so we can scroll forward infinitely
   const [currentIndex, setCurrentIndex] = useState(projects.length * 10);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
@@ -142,7 +144,10 @@ const CaseStudiesSection = () => {
 
   return (
     <>
-      <section className="max-w-6xl mx-auto px-6 sm:px-8 py-24">
+      <section
+        ref={sectionRef}
+        className="max-w-6xl mx-auto px-6 sm:px-8 py-24"
+      >
         <div className="space-y-2 mb-12">
           <div className="flex items-center gap-2 text-xs tracking-widest uppercase">
             <span className="inline-block w-2.5 h-2.5 bg-yellow-400 rounded-sm animate-pulse" />{" "}
