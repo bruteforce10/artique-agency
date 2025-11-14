@@ -1,10 +1,35 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CardAbout } from "./CardAbout";
 import { useNavbarSection } from "./NavbarContext";
+import { motion, stagger, useAnimate, useInView } from "motion/react";
 
 const AboutSection = () => {
   const sectionRef = useNavbarSection("about", false);
+  const [scope, animate] = useAnimate();
+  const isInView = useInView(scope, { once: true, margin: "-100px" });
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isInView && mounted && scope.current) {
+      animate(
+        "span[data-word]",
+        {
+          opacity: 1,
+          filter: "blur(0px)",
+        },
+        {
+          duration: 0.3,
+          delay: stagger(0.15),
+        }
+      );
+    }
+  }, [isInView, animate, mounted, scope]);
+
   const cardData = [
     {
       title: "MISSION",
@@ -31,40 +56,108 @@ const AboutSection = () => {
     <section
       ref={sectionRef}
       className="-mt-6 relative z-[2] rounded-3xl bg-white pt-20 w-full"
+      suppressHydrationWarning
     >
-      <div className="w-24 h-1 inset-x-0 mx-auto absolute top-4 bg-gray-300 rounded-full" />
+      <div
+        className="w-24 h-1 inset-x-0 mx-auto absolute top-4 bg-gray-300 rounded-full"
+        suppressHydrationWarning
+      />
 
-      <div className="max-w-5xl mx-auto w-full px-6 sm:px-8">
-        <div className="text-center">
+      <div
+        className="max-w-5xl mx-auto w-full px-6 sm:px-8"
+        suppressHydrationWarning
+      >
+        <div className="text-center" suppressHydrationWarning>
           <span className="text-sm text-gray-400 tracking-wider">ABOUT</span>
         </div>
 
-        <div className="mt-6">
-          <p className="mx-auto text-center md:text-right text-lg sm:text-2xl text-gray-500 font-light max-w-3xl leading-relaxed">
-            At <span className="font-bold text-gray-800">Artique</span>, we
-            believe that{" "}
-            <span className="font-bold text-gray-800">
-              creativity has no bounds
-            </span>
-            , and{" "}
-            <span className="font-bold text-gray-800">
-              we are committed to helping our clients unlock the full potential
-              of their ideas.
-            </span>{" "}
-            <span className="font-bold text-gray-800">We work closely</span>{" "}
-            with them to bring{" "}
-            <span className="font-bold text-gray-800">
-              their vision to life
-            </span>
-            , providing{" "}
-            <span className="font-bold text-gray-800">
-              guidance, support, and expertise
-            </span>{" "}
-            every step of the way.
-          </p>
+        <div className="mt-6" suppressHydrationWarning>
+          <div
+            ref={scope}
+            className="mx-auto text-center md:text-right text-lg sm:text-2xl text-gray-500 font-light max-w-3xl leading-relaxed"
+            suppressHydrationWarning
+          >
+            {[
+              "At ",
+              <span key="artique" className="font-bold text-gray-800">
+                Artique
+              </span>,
+              ", we believe that ",
+              <span key="creativity" className="font-bold text-gray-800">
+                creativity has no bounds
+              </span>,
+              ", and ",
+              <span key="committed" className="font-bold text-gray-800">
+                we are committed to helping our clients unlock the full
+                potential of their ideas.
+              </span>,
+              " ",
+              <span key="work" className="font-bold text-gray-800">
+                We work closely
+              </span>,
+              " with them to bring ",
+              <span key="vision" className="font-bold text-gray-800">
+                their vision to life
+              </span>,
+              ", providing ",
+              <span key="guidance" className="font-bold text-gray-800">
+                guidance, support, and expertise
+              </span>,
+              " every step of the way.",
+            ].flatMap((part, idx) => {
+              if (typeof part === "string") {
+                return part.split(" ").map((word, wordIdx) => {
+                  if (word) {
+                    return (
+                      <React.Fragment key={`str-${idx}-${wordIdx}`}>
+                        <motion.span
+                          data-word
+                          initial={{ opacity: 0, filter: "blur(10px)" }}
+                          className="inline"
+                        >
+                          {word}
+                        </motion.span>
+                        {wordIdx < part.split(" ").length - 1 && " "}
+                      </React.Fragment>
+                    );
+                  }
+                  return null;
+                });
+              }
+              // For React elements, process their text content
+              const text =
+                typeof part.props.children === "string"
+                  ? part.props.children
+                  : "";
+              if (text) {
+                const words = text.split(" ");
+                return words.map((word, wordIdx) => {
+                  if (word) {
+                    return (
+                      <React.Fragment key={`${part.key}-${wordIdx}`}>
+                        <motion.span
+                          data-word
+                          initial={{ opacity: 0, filter: "blur(10px)" }}
+                          className={`inline ${part.props.className}`}
+                        >
+                          {word}
+                        </motion.span>
+                        {wordIdx < words.length - 1 && " "}
+                      </React.Fragment>
+                    );
+                  }
+                  return null;
+                });
+              }
+              return part;
+            })}
+          </div>
         </div>
 
-        <div className="sm:mt-36 mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div
+          className="sm:mt-36 mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          suppressHydrationWarning
+        >
           {cardData.map((card, index) => {
             const classes = [];
             // Margin classes
@@ -77,13 +170,24 @@ const AboutSection = () => {
             }
 
             return (
-              <CardAbout
+              <motion.div
                 key={index}
-                title={card.title}
-                description={card.description}
-                image={card.image}
-                className={classes.join(" ")}
-              />
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{
+                  duration: 0.6,
+                  delay: index * 0.2,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              >
+                <CardAbout
+                  title={card.title}
+                  description={card.description}
+                  image={card.image}
+                  className={classes.join(" ")}
+                />
+              </motion.div>
             );
           })}
         </div>
