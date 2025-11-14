@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { Eye, MessageCircle, Heart, Calendar, Clock } from "lucide-react";
+import { Calendar, Clock } from "lucide-react";
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -16,30 +16,79 @@ import ShareButtons from "./ShareButtons";
 import { Link } from "@/i18n/navigation";
 import { useNavbarSection } from "./NavbarContext";
 
-export default function BlogDetailSection({ post }) {
+export default function BlogDetailSection({ blog }) {
   const navbarSectionRef = useNavbarSection("blog-detail-section", false);
   const heroSectionRef = useNavbarSection("blog-hero", true);
+
+  // Format date from createdAt
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  };
+
+  // Format read time
+  const formatReadTime = (minutes) => {
+    if (!minutes) return "";
+    return `${minutes} min read`;
+  };
+
+  // Get creator info
+  const creatorAvatar = blog?.creator?.avatar?.url;
+  const creatorNama = blog?.creator?.nama || "Artique Agency";
+  const creatorInitials = creatorNama?.charAt(0).toUpperCase() || "A";
+
+  // Get avatar color
+  const getAvatarColor = (nama) => {
+    const colors = [
+      "bg-amber-900",
+      "bg-blue-600",
+      "bg-green-600",
+      "bg-purple-600",
+      "bg-red-600",
+      "bg-pink-600",
+      "bg-indigo-600",
+      "bg-teal-600",
+      "bg-orange-600",
+    ];
+    if (!nama) return colors[0];
+    const index = nama.charCodeAt(0) % colors.length;
+    return colors[index];
+  };
+
+  const title = blog?.judulBlog || "";
+  const coverImage = blog?.cover?.url || "/bg-blog.webp";
+  const content = blog?.description?.html || "";
+  const date = formatDate(blog?.createdAt);
+  const readTime = formatReadTime(blog?.minuteRead);
+  const category = blog?.category || "";
+
   const breadcrumbItems = useMemo(
     () => [
       { label: "Home", href: "/" },
       { label: "Blog", href: "/blog" },
-      { label: post.title, href: null },
+      { label: title, href: null },
     ],
-    [post.title]
+    [title]
   );
 
   return (
     <div className="min-h-screen bg-background">
       <div
-        className="relative w-full h-64 sm:h-96 lg:h-[500px] mb-8"
+        className="relative w-full mx-auto h-64 sm:h-96 lg:h-[500px] mb-8"
         ref={heroSectionRef}
       >
         <Image
-          src={post.image}
-          alt={post.title}
+          src={coverImage}
+          alt={title}
           fill
           className="object-cover"
           priority
+          sizes="100vw"
         />
       </div>
 
@@ -63,7 +112,7 @@ export default function BlogDetailSection({ post }) {
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className="font-bold pt-6 pb-2 text-3xl sm:text-4xl lg:text-5xl leading-tight max-w-4xl">
-          {post.title}
+          {title}
         </h1>
       </div>
 
@@ -75,30 +124,48 @@ export default function BlogDetailSection({ post }) {
         {/* Author and Metadata */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 pb-6 border-b">
           <div className="flex items-center gap-4">
-            <div
-              className={cn(
-                "w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold text-lg",
-                post.author.avatarColor
-              )}
-            >
-              {post.author.avatar}
-            </div>
+            {creatorAvatar ? (
+              <div className="relative w-12 h-12 rounded-full overflow-hidden">
+                <Image
+                  src={creatorAvatar}
+                  alt={creatorNama}
+                  fill
+                  className="object-cover"
+                  sizes="48px"
+                />
+              </div>
+            ) : (
+              <div
+                className={cn(
+                  "w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold text-lg",
+                  getAvatarColor(creatorNama)
+                )}
+              >
+                {creatorInitials}
+              </div>
+            )}
             <div>
               <p className="text-base font-semibold text-foreground">
-                {post.author.name}
+                {creatorNama}
               </p>
               <div className="flex items-center gap-4 text-sm text-muted-foreground mt-1">
-                <div className="flex items-center gap-1.5">
-                  <Calendar className="h-4 w-4" />
-                  <span>{post.date}</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <Clock className="h-4 w-4" />
-                  <span>{post.readTime}</span>
-                </div>
-                <span className="px-2 py-0.5 bg-primary/10 text-primary rounded-full text-xs font-medium">
-                  {post.category}
-                </span>
+                {date && (
+                  <div className="flex items-center gap-1.5">
+                    <Calendar className="h-4 w-4" />
+                    <span>{date}</span>
+                  </div>
+                )}
+                {readTime && (
+                  <div className="flex items-center gap-1.5">
+                    <Clock className="h-4 w-4" />
+                    <span>{readTime}</span>
+                  </div>
+                )}
+                {category && (
+                  <span className="px-2 py-0.5 bg-primary/10 text-primary rounded-full text-xs font-medium">
+                    {category}
+                  </span>
+                )}
               </div>
             </div>
           </div>
@@ -106,12 +173,13 @@ export default function BlogDetailSection({ post }) {
 
         {/* Share Buttons */}
         <div className="mb-8">
-          <ShareButtons title={post.title} />
+          <ShareButtons title={title} />
         </div>
 
         {/* Blog Content */}
-        <div
-          className="prose prose-lg max-w-none
+        {content && (
+          <div
+            className="prose prose-lg max-w-none
             prose-headings:font-bold prose-headings:text-foreground
             prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
             prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3
@@ -126,8 +194,9 @@ export default function BlogDetailSection({ post }) {
             prose-pre:bg-muted prose-pre:p-4 prose-pre:rounded-lg
             prose-img:rounded-lg prose-img:shadow-md
           "
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
+            dangerouslySetInnerHTML={{ __html: content }}
+          />
+        )}
       </article>
     </div>
   );

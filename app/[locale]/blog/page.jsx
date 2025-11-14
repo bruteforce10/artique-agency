@@ -3,12 +3,14 @@ import { NavbarProvider } from "@/components/NavbarContext";
 import Footer from "@/components/Footer";
 import BlogSection from "@/components/BlogSection";
 
-export default function BlogPage() {
+export default async function BlogPage({ params }) {
+  const { locale } = await params;
+
   return (
     <NavbarProvider>
       <div>
         <NavbarComponent />
-        <BlogSection />
+        <BlogSection locale={locale} />
         <Footer />
       </div>
     </NavbarProvider>
