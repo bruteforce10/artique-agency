@@ -18,7 +18,7 @@ export function NavbarComponent() {
     { name: "Our Services", link: "/services" },
     { name: "Case Studies", link: "/projects" },
     { name: "About Us", link: "/about-us" },
-    { name: "Blogs", link: "#blogs" },
+    { name: "Blogs", link: "/blog" },
   ];
 
   useEffect(() => {
