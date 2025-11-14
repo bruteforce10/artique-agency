@@ -7,7 +7,8 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavbarColor } from "./NavbarContext";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export function NavbarComponent() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -73,7 +74,7 @@ export function NavbarComponent() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center ">
+          <div className="hidden lg:flex items-center gap-4">
             <div
               className={cn(
                 "px-6 py-3",
@@ -85,7 +86,7 @@ export function NavbarComponent() {
             >
               <div className="flex items-center space-x-8">
                 {navItems.map((item, index) => (
-                  <a
+                  <Link
                     key={index}
                     href={item.link}
                     className={cn(
@@ -94,10 +95,13 @@ export function NavbarComponent() {
                     )}
                   >
                     {item.name}
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
+
+            {/* Language Switcher */}
+            <LanguageSwitcher navbarColor={navbarColor} />
           </div>
 
           {/* Desktop CTA Button */}
@@ -131,15 +135,25 @@ export function NavbarComponent() {
                   {/* Mobile Navigation Links */}
                   <div className="flex flex-col pt-8 space-y-1 flex-1">
                     {navItems.map((item, index) => (
-                      <a
+                      <Link
                         key={index}
                         href={item.link}
                         onClick={() => setIsMobileMenuOpen(false)}
                         className="text-gray-800 hover:bg-gray-300/50 transition-colors duration-200 text-base font-medium py-3 px-4"
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
+                  </div>
+
+                  {/* Mobile Language Switcher */}
+                  <div className="px-4 py-4 border-t border-gray-300">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-gray-700">
+                        Language
+                      </span>
+                    </div>
+                    <LanguageSwitcher navbarColor="black" />
                   </div>
 
                   {/* Mobile CTA Button */}
