@@ -7,6 +7,8 @@ import {
   ScrollVelocityRow,
 } from "@/components/ui/scroll-based-velocity";
 import { useNavbarSection } from "./NavbarContext";
+import Link from "next/link";
+import ButtonArrow from "./ui/ButtonArrow";
 
 const clients = [
   { name: "Erspo", logo: "/logo-clients/erspo.avif" },
@@ -107,15 +109,7 @@ export default function ProjectSection() {
           <p className="text-sm sm:text-base mb-6">
             Trusted by leading brands across Southeast Asia
           </p>
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-3 text-sm font-bold uppercase tracking-wider bg-yellow-400 text-gray-900 px-6 py-3 rounded-full border-2 border-yellow-300 hover:bg-yellow-300 transition-colors"
-          >
-            Become a Partner
-            <span className="inline-flex w-7 h-7 items-center justify-center bg-gray-900 text-yellow-400 rounded-md">
-              →
-            </span>
-          </a>
+          <ButtonArrow href="#contact" text="Become a Partner" />
         </motion.div>
       </div>
     </section>

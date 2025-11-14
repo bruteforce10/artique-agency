@@ -327,7 +327,7 @@ const CaseStudiesSection = () => {
                 return prev - 1;
               });
             }}
-            className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors z-20"
+            className="absolute left-4 lg:top-20 md:top-16 top-24 w-10 h-10 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors z-2"
             aria-label="Previous slide"
           >
             <ChevronLeft className="w-6 h-6" />
@@ -344,7 +344,7 @@ const CaseStudiesSection = () => {
                 return prev + 1;
               });
             }}
-            className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors z-20"
+            className="absolute right-4 lg:top-20 md:top-16 top-24 w-10 h-10 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors z-2"
             aria-label="Next slide"
           >
             <ChevronRight className="w-6 h-6" />

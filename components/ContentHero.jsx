@@ -27,7 +27,7 @@ export default function ContentHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="text-white/80 sm:text-md text-sm mb-6 sm:mb-8 max-w-2xl mx-auto lg:mx-0 px-4 sm:px-0 leading-relaxed"
+            className="text-white/80 text-md mb-6 sm:mb-8 max-w-2xl mx-auto lg:mx-0 px-4 sm:px-0 leading-relaxed"
           >
             At Artique, we believe that creativity has no bounds, and we are
             committed to helping our clients unlock the full potential of their

@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import { cn } from "@/lib/utils";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useNavbarSection } from "./NavbarContext";
+import ButtonArrow from "./ui/ButtonArrow";
 
 /**
  * HeroSection component dengan:
@@ -181,24 +182,12 @@ export default function HeroSection({
           )}
 
           {description && (
-            <p className="mt-6 max-sm:text-sm text-white/85 leading-relaxed text-base max-w-2xl">
+            <p className="mt-6 max-sm:text-sm mb-12 text-white/85 leading-relaxed text-base max-w-2xl">
               {description}
             </p>
           )}
 
-          {button && (
-            <a
-              href={button.href}
-              className="inline-flex items-center gap-3 mt-8 text-sm font-bold uppercase tracking-wider bg-yellow-400 text-gray-900 px-5 py-3 rounded-full border-2 border-yellow-300 hover:bg-yellow-300 transition-colors"
-            >
-              {button.text}
-              {button.icon && (
-                <span className="inline-flex w-7 h-7 items-center justify-center bg-gray-900 text-yellow-400 rounded-md">
-                  {button.icon}
-                </span>
-              )}
-            </a>
-          )}
+          {button && <ButtonArrow href={button.href} text={button.text} />}
 
           {children}
         </motion.div>

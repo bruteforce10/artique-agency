@@ -24,7 +24,6 @@ export default function WhyChooseUs({
       button={{
         href: "#learn-more",
         text: "Learn more",
-        icon: "→",
       }}
       contentClassName="py-24 sm:py-28 lg:py-32"
       parallaxConfig={{
