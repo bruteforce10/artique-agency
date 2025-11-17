@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { Calendar, Clock } from "lucide-react";
@@ -62,7 +62,7 @@ export default function BlogDetailSection({ blog }) {
 
   const title = blog?.judulBlog || "";
   const coverImage = blog?.cover?.url || "/bg-blog.webp";
-  const content = blog?.description?.html || "";
+  const content = blog?.description || null;
   const date = formatDate(blog?.createdAt);
   const readTime = formatReadTime(blog?.minuteRead);
   const category = blog?.category || "";
@@ -176,28 +176,128 @@ export default function BlogDetailSection({ blog }) {
           <ShareButtons title={title} />
         </div>
 
-        {/* Blog Content */}
-        {content && (
-          <div
-            className="prose prose-lg max-w-none
-            prose-headings:font-bold prose-headings:text-foreground
-            prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
-            prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3
-            prose-p:text-foreground/90 prose-p:leading-relaxed prose-p:mb-4
-            prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-            prose-strong:text-foreground prose-strong:font-semibold
-            prose-ul:list-disc prose-ul:pl-6 prose-ul:mb-4
-            prose-ol:list-decimal prose-ol:pl-6 prose-ol:mb-4
-            prose-li:mb-2 prose-li:text-foreground/90
-            prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-4 prose-blockquote:italic
-            prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm
-            prose-pre:bg-muted prose-pre:p-4 prose-pre:rounded-lg
-            prose-img:rounded-lg prose-img:shadow-md
-          "
-            dangerouslySetInnerHTML={{ __html: content }}
-          />
+        {/* Blog Content (Hygraph Rich Text) */}
+        {content?.raw?.children && (
+          <div className="space-y-4 text-foreground">
+            {content.raw.children.map((typeObj, index) => {
+              const children = typeObj.children.map((item, itemindex) =>
+                getContentFragment(itemindex, item.text, item)
+              );
+              return getContentFragment(index, children, typeObj, typeObj.type);
+            })}
+          </div>
         )}
       </article>
     </div>
   );
 }
+
+// Util untuk render Hygraph Rich Text
+const getContentFragment = (index, text, obj, type) => {
+  let modifiedText = text;
+
+  if (obj) {
+    if (obj.bold) {
+      modifiedText = <b key={index}>{text}</b>;
+    }
+
+    if (obj.italic) {
+      modifiedText = <em key={index}>{text}</em>;
+    }
+
+    if (obj.underline) {
+      modifiedText = <u key={index}>{text}</u>;
+    }
+
+    if (obj.code) {
+      modifiedText = (
+        <code
+          className="bg-[#366da0] text-white py-[.5px] px-[5px] rounded-md"
+          key={index}
+        >
+          {text}
+        </code>
+      );
+    }
+  }
+
+  switch (type) {
+    case "heading-three":
+      return (
+        <h3 key={index} className="text-2xl text-white font-medium mt-12 mb-4">
+          {modifiedText.map((item, i) => (
+            <React.Fragment key={i}>{item}</React.Fragment>
+          ))}
+        </h3>
+      );
+
+    case "paragraph":
+      return (
+        <p key={index} className="mb-8 leading-relaxed">
+          {modifiedText.map((item, i) => (
+            <React.Fragment key={i}>{item}</React.Fragment>
+          ))}
+        </p>
+      );
+
+    case "heading-four":
+      return (
+        <h4 key={index} className="text-xl text-white font-medium mb-4">
+          {modifiedText.map((item, i) => (
+            <React.Fragment key={i}>{item}</React.Fragment>
+          ))}
+        </h4>
+      );
+
+    case "bulleted-list":
+      return (
+        <ul key={index} className="list-disc space-y-2 mb-6 ml-4">
+          {obj.children?.map((item, i) => (
+            <li key={i}>{item.children?.[0]?.children?.[0]?.text}</li>
+          ))}
+        </ul>
+      );
+
+    case "numbered-list":
+      return (
+        <ol key={index} className="list-decimal space-y-2 mb-6 ml-4">
+          {obj.children?.map((item, i) => (
+            <li key={i}>{item.children?.[0]?.children?.[0]?.text}</li>
+          ))}
+        </ol>
+      );
+
+    case "image":
+      return (
+        <Image
+          key={index}
+          alt={obj.title}
+          height={obj.height}
+          width={obj.width}
+          src={obj.src}
+          className="mb-4"
+        />
+      );
+
+    case "code-block":
+      return (
+        <div className="mockup-code text-white mb-6" key={index}>
+          {modifiedText.map((item, i) => {
+            const language = item.split("&");
+            return (
+              <React.Fragment key={i}>
+                {language.map((line, j) => (
+                  <pre key={j}>
+                    <code>{line}</code>
+                  </pre>
+                ))}
+              </React.Fragment>
+            );
+          })}
+        </div>
+      );
+
+    default:
+      return modifiedText;
+  }
+};

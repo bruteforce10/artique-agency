@@ -25,7 +25,11 @@ const languages = [
   },
 ];
 
-export default function LanguageSwitcher({ className, navbarColor }) {
+export default function LanguageSwitcher({
+  className,
+  isDesktop,
+  navbarColor,
+}) {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
@@ -44,10 +48,12 @@ export default function LanguageSwitcher({ className, navbarColor }) {
     <Select value={locale} onValueChange={handleLanguageChange}>
       <SelectTrigger
         className={cn(
-          "w-[140px] h-9 gap-2 px-3",
-          navbarColor === "black"
-            ? "border-gray-300 bg-white text-black hover:bg-gray-50"
-            : "border-white/30 bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm",
+          isDesktop ? "w-fit h-9 gap-2 px-3" : "w-full h-9 gap-2 px-3",
+          isDesktop
+            ? navbarColor === "black"
+              ? "border-none text-black font-medium px-0"
+              : "border-none text-white font-medium px-0"
+            : "border-gray-300 bg-white text-black hover:bg-gray-50",
           className
         )}
       >

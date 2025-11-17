@@ -1,7 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { IoMdMenu } from "react-icons/io";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -97,11 +103,9 @@ export function NavbarComponent() {
                     {item.name}
                   </Link>
                 ))}
+                <LanguageSwitcher isDesktop={true} navbarColor={navbarColor} />
               </div>
             </div>
-
-            {/* Language Switcher */}
-            <LanguageSwitcher navbarColor={navbarColor} />
           </div>
 
           {/* Desktop CTA Button */}
@@ -132,6 +136,11 @@ export function NavbarComponent() {
                 className="w-80 bg-gray-200 border-l border-gray-700"
               >
                 <div className="flex flex-col h-full">
+                  <SheetHeader className="border-b border-gray-300 pb-4">
+                    <SheetTitle className="text-lg font-semibold text-gray-900">
+                      Menu
+                    </SheetTitle>
+                  </SheetHeader>
                   {/* Mobile Navigation Links */}
                   <div className="flex flex-col pt-8 space-y-1 flex-1">
                     {navItems.map((item, index) => (
@@ -153,7 +162,7 @@ export function NavbarComponent() {
                         Language
                       </span>
                     </div>
-                    <LanguageSwitcher navbarColor="black" />
+                    <LanguageSwitcher isDesktop={false} />
                   </div>
 
                   {/* Mobile CTA Button */}

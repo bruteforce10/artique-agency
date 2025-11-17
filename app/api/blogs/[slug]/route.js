@@ -8,6 +8,7 @@ const graphQLClient = new GraphQLClient(HYGRAPH_ENDPOINT);
 export async function GET(request, { params }) {
   const { slug } = await params;
   const { searchParams } = new URL(request.url);
+
   let locale = searchParams.get("locale") || "en";
   if (locale === "id") {
     locale = "id_ID";
@@ -16,82 +17,41 @@ export async function GET(request, { params }) {
   try {
     const cleanSlug = slug.trim();
 
-    // Try direct query first, fallback to fetching all blogs if it fails
-    try {
-      const query = gql`
-        query GetBlog {
-          blog(where: {slug: "${cleanSlug}"}, locales: ${locale}) {
-            id
-            slug
-            judulBlog
-            createdAt
-            minuteRead
-            metaDescription
-            category
-            cover {
-              url
-            }
-            creator {
-              avatar {
-                url
-              }
-              nama
-            }
-            description {
-              html
-            }
-          }
-        }
-      `;
-
-      const response = await graphQLClient.request(query);
-
-      if (response.blog) {
-        return NextResponse.json(response);
-      }
-    } catch (directQueryError) {
-      console.warn(
-        "Direct blog query failed, trying alternative approach:",
-        directQueryError.message
-      );
-    }
-
-    // Fallback: Fetch all blogs and filter by slug
-    const allBlogsQuery = gql`
-      query GetAllBlogs {
-        blogs(locales: ${locale}) {
+    // Query sederhana: langsung berdasarkan slug dan locale
+    const query = gql`
+      query MyQuery {
+        blog(where: { slug: "${cleanSlug}" }, locales: ${locale}) {
+          judulBlog
           id
           slug
-          judulBlog
           createdAt
           minuteRead
-          metaDescription
-          category
-          cover {
-            url
-          }
           creator {
+            nama
             avatar {
               url
             }
-            nama
+          }
+          cover {
+            url
           }
           description {
-            html
+            raw
           }
+          metaDescription
+          category
         }
       }
     `;
 
-    const allBlogsResponse = await graphQLClient.request(allBlogsQuery);
-    const blogs = allBlogsResponse.blogs || [];
-    const blog = blogs.find((b) => b.slug === cleanSlug);
+    const response = await graphQLClient.request(query);
 
-    if (!blog) {
+    if (!response.blog) {
       return NextResponse.json({ error: "Blog not found" }, { status: 404 });
     }
 
-    return NextResponse.json({ blog });
+    // Kembalikan response sederhana dengan blog langsung
+    return NextResponse.json({ blog: response.blog });
   } catch (error) {
     console.error("Error fetching blog:", error);
     console.error("Error details:", {

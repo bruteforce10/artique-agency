@@ -4,68 +4,33 @@ import Footer from "@/components/Footer";
 import BlogDetailSection from "@/components/BlogDetailSection";
 import { notFound } from "next/navigation";
 import CTASection from "@/components/CTASection";
-import { gql, GraphQLClient } from "graphql-request";
-import { routing } from "@/i18n/routing";
 
-const HYGRAPH_ENDPOINT =
-  "https://ap-south-1.cdn.hygraph.com/content/cmguqxtwt008w07w963j4v364/master";
-const graphQLClient = new GraphQLClient(HYGRAPH_ENDPOINT);
-
-async function fetchAllBlogs(locale) {
-  try {
-    let apiLocale = locale || "en";
-    if (apiLocale === "id") {
-      apiLocale = "id_ID";
-    }
-
-    // Use same format as case-studies route (string interpolation)
-    // Hygraph accepts locales: ${locale} format directly
-    const query = gql`
-      query GetBlogs {
-        blogs(locales: ${apiLocale}) {
-          slug
-        }
-      }
-    `;
-
-    const response = await graphQLClient.request(query);
-    return response.blogs || [];
-  } catch (error) {
-    console.error("Error fetching blogs for static params:", error);
-    console.error("Error details:", {
-      message: error.message,
-      response: error.response,
-    });
-    return [];
-  }
-}
-
+// Ambil detail blog lewat API route (slug + locale)
 async function fetchBlogBySlug(slug, locale) {
   try {
-    // Validate slug
     if (!slug || typeof slug !== "string" || slug.trim() === "") {
       console.error("Invalid slug provided:", slug);
       return null;
     }
 
-    // Use API route instead of duplicating GraphQL logic
-    // API route is at /api/blogs/[slug] - all GraphQL logic is centralized there
     const cleanSlug = slug.trim();
+    const apiLocale = locale || "en";
 
-    // For server-side fetch in Next.js, we need to construct the full URL
-    // Use environment variable or construct from request context
-    const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
-    const host = process.env.VERCEL_URL
-      ? `${protocol}://${process.env.VERCEL_URL}`
-      : process.env.NEXT_PUBLIC_BASE_URL
-      ? process.env.NEXT_PUBLIC_BASE_URL
-      : "http://localhost:3000";
+    // Selalu gunakan absolute URL untuk fetch di server
+    let baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    if (!baseUrl) {
+      if (process.env.VERCEL_URL) {
+        baseUrl = `https://${process.env.VERCEL_URL}`;
+      } else {
+        baseUrl = "http://localhost:3000";
+      }
+    }
 
-    const apiUrl = `${host}/api/blogs/${cleanSlug}?locale=${locale}`;
+    const url = `${baseUrl}/api/blogs/${cleanSlug}?locale=${apiLocale}`;
 
-    const response = await fetch(apiUrl, {
-      next: { revalidate: 60 }, // Revalidate every 60 seconds
-      cache: "force-cache", // Cache for better performance in server components
+    const response = await fetch(url, {
+      next: { revalidate: 60 },
+      cache: "force-cache",
     });
 
     if (!response.ok) {
@@ -81,35 +46,6 @@ async function fetchBlogBySlug(slug, locale) {
     console.error("Error fetching blog from API:", error);
     return null;
   }
-}
-
-export async function generateStaticParams() {
-  // Generate static params for all locales
-  // Note: Next.js will automatically combine these with locale from parent route
-  const allParams = [];
-
-  for (const locale of routing.locales) {
-    try {
-      const blogs = await fetchAllBlogs(locale);
-      const validBlogs = blogs.filter(
-        (blog) =>
-          blog.slug && typeof blog.slug === "string" && blog.slug.trim() !== ""
-      );
-      const params = validBlogs.map((blog) => ({
-        slug: blog.slug.trim(),
-      }));
-      allParams.push(...params);
-    } catch (error) {
-      console.error(`Error fetching blogs for locale ${locale}:`, error);
-    }
-  }
-
-  // Remove duplicates (same slug might exist in multiple locales)
-  const uniqueParams = Array.from(
-    new Map(allParams.map((param) => [param.slug, param])).values()
-  );
-
-  return uniqueParams;
 }
 
 export async function generateMetadata({ params }) {
