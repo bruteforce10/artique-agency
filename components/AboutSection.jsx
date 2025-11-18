@@ -93,7 +93,7 @@ const AboutSection = () => {
               </span>,
               " ",
               <span key="work" className="font-bold text-gray-800">
-                We work closely
+                {"\u00A0We work closely"}
               </span>,
               " with them to bring ",
               <span key="vision" className="font-bold text-gray-800">
@@ -103,7 +103,7 @@ const AboutSection = () => {
               <span key="guidance" className="font-bold text-gray-800">
                 guidance, support, and expertise
               </span>,
-              " every step of the way.",
+              "\u00A0every step of the way.",
             ].flatMap((part, idx) => {
               if (typeof part === "string") {
                 return part.split(" ").map((word, wordIdx) => {
