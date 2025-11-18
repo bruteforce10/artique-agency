@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, useInView } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 /**
  * CTASection component - reusable CTA section with yellow background
@@ -13,7 +14,7 @@ export default function CTASection({
   className,
   title = "GET AN ESTIMATE FOR YOUR UPCOMING PROJECT",
   buttonText = "CONTACT",
-  buttonHref,
+  buttonHref = "/contact",
   onClick,
 }) {
   const ctaRef = useRef(null);
@@ -61,16 +62,18 @@ export default function CTASection({
                 className="bg-black text-[#FFD800] hover:bg-gray-900 px-8 py-6 text-base sm:text-lg font-semibold rounded-md uppercase tracking-wide transition-colors"
                 size="lg"
               >
-                <a href={buttonHref}>{buttonText}</a>
+                <Link href={buttonHref}>{buttonText}</Link>
               </Button>
             ) : (
-              <Button
-                onClick={onClick}
-                className="bg-black text-[#FFD800] hover:bg-gray-900 px-8 py-6 text-base sm:text-lg font-semibold rounded-md uppercase tracking-wide transition-colors"
-                size="lg"
-              >
-                {buttonText}
-              </Button>
+              <Link href={buttonHref}>
+                <Button
+                  onClick={onClick}
+                  className="bg-black text-[#FFD800] hover:bg-gray-900 px-8 py-6 text-base sm:text-lg font-semibold rounded-md uppercase tracking-wide transition-colors"
+                  size="lg"
+                >
+                  {buttonText}
+                </Button>
+              </Link>
             )}
           </motion.div>
         </div>

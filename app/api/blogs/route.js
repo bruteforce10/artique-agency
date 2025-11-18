@@ -41,7 +41,7 @@ export async function GET(request) {
     `;
 
     const response = await graphQLClient.request(query);
-    return NextResponse.json(response);
+    return NextResponse.json(response.blogs || []);
   } catch (error) {
     console.error("Error fetching blogs:", error);
     console.error("Error details:", {

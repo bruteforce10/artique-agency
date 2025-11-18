@@ -22,6 +22,7 @@ import {
 import { Search, MoreVertical } from "lucide-react";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
+import { useNavbarSection } from "./NavbarContext";
 
 export default function BlogListClient({
   blogs,
@@ -31,6 +32,7 @@ export default function BlogListClient({
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 6;
+  const navbarSectionRef = useNavbarSection("blog-section", false);
 
   // Extract unique categories from blogs
   const categories = useMemo(() => {
@@ -115,7 +117,10 @@ export default function BlogListClient({
   };
 
   return (
-    <section className="max-w-7xl mx-auto px-6 sm:px-8 py-12 sm:py-16">
+    <section
+      className="max-w-7xl mx-auto px-6 sm:px-8 py-12 sm:py-16"
+      ref={navbarSectionRef}
+    >
       {/* Search and Filter */}
       <div className="mb-8 flex flex-col sm:flex-row gap-4 items-center justify-between">
         <div className="relative w-full sm:w-96">

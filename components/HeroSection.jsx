@@ -129,24 +129,25 @@ export default function HeroSection({
   return (
     <section
       ref={setRefs}
-      className={cn("relative w-full overflow-hidden", className)}
+      className={cn("relative w-full min-h-[500px] overflow-hidden", className)}
     >
       {/* Parallax background using Motion */}
       <motion.div
-        className="absolute inset-0 -z-10"
+        className="absolute inset-0 -z-10 min-h-full"
         style={{
           y,
           scale: scaleBg,
           backgroundImage: `url(${backgroundImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
           willChange: "transform",
         }}
       />
 
       {/* Dark overlay for readability */}
       <div
-        className="absolute inset-0 -z-10"
+        className="absolute inset-0 -z-[9]"
         style={{
           backgroundColor: `rgba(0, 0, 0, ${parseInt(overlayOpacity) / 100})`,
         }}

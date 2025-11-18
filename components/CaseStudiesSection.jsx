@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
 import { X, ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
 import { useNavbarSection } from "./NavbarContext";
+import Link from "next/link";
 
 const projects = [
   {
@@ -156,24 +157,26 @@ const CaseStudiesSection = () => {
           <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight">
             Case Studies
           </h2>
-          <button className="relative font-medium text-[17px] h-[2.4em] flex items-center overflow-hidden cursor-pointer group mt-12 bg-transparent border-none outline-none">
-            <span className="mr-12 uppercase">More Projects</span>
-            <div className="absolute right-[0.3em] bg-[#FFD800] h-[1.8em] w-[1.8em] rounded-[0.7em] flex items-center justify-center transition-all duration-300 group-hover:w-[calc(100%-0.3em)] active:scale-95">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width="24"
-                height="24"
-                className="w-[1.1em] transition-transform duration-300 text-black group-hover:translate-x-[0.1em]"
-              >
-                <path fill="none" d="M0 0h24v24H0z"></path>
-                <path
-                  fill="currentColor"
-                  d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
-                ></path>
-              </svg>
-            </div>
-          </button>
+          <Link href="/projects">
+            <button className="relative font-medium text-[17px] h-[2.4em] flex items-center overflow-hidden cursor-pointer group mt-12 bg-transparent border-none outline-none">
+              <span className="mr-12 uppercase">More Projects</span>
+              <div className="absolute right-[0.3em] bg-[#FFD800] h-[1.8em] w-[1.8em] rounded-[0.7em] flex items-center justify-center transition-all duration-300 group-hover:w-[calc(100%-0.3em)] active:scale-95">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
+                  className="w-[1.1em] transition-transform duration-300 text-black group-hover:translate-x-[0.1em]"
+                >
+                  <path fill="none" d="M0 0h24v24H0z"></path>
+                  <path
+                    fill="currentColor"
+                    d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+                  ></path>
+                </svg>
+              </div>
+            </button>
+          </Link>
         </div>
 
         {/* Carousel Container */}

@@ -1,11 +1,6 @@
 import { cn } from "@/lib/utils";
 import HeroSection from "./HeroSection";
 import BlogListClient from "./BlogListClient";
-import { gql, GraphQLClient } from "graphql-request";
-
-const HYGRAPH_ENDPOINT =
-  "https://ap-south-1.cdn.hygraph.com/content/cmguqxtwt008w07w963j4v364/master";
-const graphQLClient = new GraphQLClient(HYGRAPH_ENDPOINT);
 
 async function fetchBlogs(locale) {
   try {
@@ -15,41 +10,24 @@ async function fetchBlogs(locale) {
       apiLocale = "id_ID";
     }
 
-    // Use same format as case-studies route (string interpolation)
-    // Hygraph accepts locales: ${locale} format directly
-    // Fetch directly from GraphQL for server component efficiency
-    // API route is still available at /api/blogs for client components
-    const query = gql`
-      query GetBlogs {
-        blogs(locales: ${apiLocale}) {
-          createdAt
-          id
-          judulBlog
-          cover {
-            url
-          }
-          metaDescription
-          minuteRead
-          slug
-          category
-          creator {
-            avatar {
-              url
-            }
-            nama
-          }
-        }
+    // Fetch from API route
+    const response = await fetch(
+      `${
+        process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+      }/api/blogs?locale=${apiLocale}`,
+      {
+        cache: "no-store",
       }
-    `;
+    );
 
-    const response = await graphQLClient.request(query);
-    return response.blogs || [];
+    if (!response.ok) {
+      throw new Error(`Failed to fetch blogs: ${response.statusText}`);
+    }
+
+    const blogs = await response.json();
+    return blogs || [];
   } catch (error) {
     console.error("Error fetching blogs:", error);
-    console.error("Error details:", {
-      message: error.message,
-      response: error.response,
-    });
     return [];
   }
 }

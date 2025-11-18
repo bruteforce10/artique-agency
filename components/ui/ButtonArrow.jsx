@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-const ButtonArrow = ({ href, text }) => {
+const ButtonArrow = ({ href = "/projects", text }) => {
   return (
     <Link
       href={href}

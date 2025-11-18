@@ -110,9 +110,11 @@ export function NavbarComponent() {
 
           {/* Desktop CTA Button */}
           <div className="hidden lg:flex items-center">
-            <Button className="bg-white uppercase text-gray-900 hover:bg-white/90 px-6 py-2 rounded-full font-semibold transition-all tracking-wider duration-200">
-              Contact us
-            </Button>
+            <Link href="/contact">
+              <Button className="bg-white uppercase text-gray-900 hover:bg-white/90 px-6 py-2 rounded-full font-semibold transition-all tracking-wider duration-200">
+                Contact us
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -167,9 +169,11 @@ export function NavbarComponent() {
 
                   {/* Mobile CTA Button */}
                   <div className="px-4 pb-8">
-                    <Button className="bg-white uppercase text-gray-900 hover:bg-white/90 px-6 py-2 rounded-full font-semibold transition-all tracking-wider duration-200 w-full">
-                      Contact us
-                    </Button>
+                    <Link href="/contact">
+                      <Button className="bg-white uppercase text-gray-900 hover:bg-white/90 px-6 py-2 rounded-full font-semibold transition-all tracking-wider duration-200 w-full">
+                        Contact us
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               </SheetContent>
