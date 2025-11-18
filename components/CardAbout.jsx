@@ -33,10 +33,10 @@ export const CardAbout = ({ title, description, image, className = "" }) => {
         <div className="relative z-10">
           <div className="w-20 h-20 rounded-xl bg-white/90 flex items-center justify-center shadow mb-6">
             <Image
-              src={`/about/${image}.png`}
+              src={typeof image === "string" ? image : `/about/${image}.png`}
               width={64}
               height={64}
-              alt={`about-icon-${image}`}
+              alt={`about-icon-${title || image}`}
             />
           </div>
 

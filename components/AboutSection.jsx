@@ -1,10 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { CardAbout } from "./CardAbout";
 import { useNavbarSection } from "./NavbarContext";
 import { motion, stagger, useAnimate, useInView } from "motion/react";
+import { useLocale } from "next-intl";
 
-const AboutSection = () => {
+const AboutSection = ({ about, mision }) => {
+  const locale = useLocale();
   const sectionRef = useNavbarSection("about", false);
   const [scope, animate] = useAnimate();
   const isInView = useInView(scope, { once: true, margin: "-100px" });
@@ -30,27 +32,161 @@ const AboutSection = () => {
     }
   }, [isInView, animate, mounted, scope]);
 
-  const cardData = [
-    {
-      title: "MISSION",
-      description:
-        "Our mission is to help enterprises, brands, and thought leaders flourish and become trendsetters, transforming their products and companies into beloved brands within the market.",
-      image: 2,
-    },
-    {
-      title: "GOALS",
-      description:
-        "At Artique, we believe that creativity has no bounds, and we are committed to helping our clients unlock the full potential of their ideas. We work closely with them to bring their vision to life, providing guidance, support, and expertise every step of the way.",
-      image: 1,
-    },
+  // Parse about text and add bold spans for key phrases
+  const parseAboutText = useMemo(() => {
+    if (!about) {
+      // Fallback to hardcoded text if no data
+      return [
+        "At ",
+        <span key="artique" className="font-bold text-gray-800">
+          Artique
+        </span>,
+        ", we believe that ",
+        <span key="creativity" className="font-bold text-gray-800">
+          creativity has no bounds
+        </span>,
+        ", and ",
+        <span key="committed" className="font-bold text-gray-800">
+          we are committed to helping our clients unlock the full potential of
+          their ideas.
+        </span>,
+        " ",
+        <span key="work" className="font-bold text-gray-800">
+          {"\u00A0We work closely"}
+        </span>,
+        "\u00A0with them to bring ",
+        <span key="vision" className="font-bold text-gray-800">
+          their vision to life
+        </span>,
+        ", providing ",
+        <span key="guidance" className="font-bold text-gray-800">
+          guidance, support, and expertise
+        </span>,
+        "\u00A0every step of the way.",
+      ];
+    }
 
-    {
-      title: "EXPERTISE",
-      description:
-        "Our expertise lies in the vibrant and dynamic Southeast Asian markets, where we have a deep understanding of the cultural nuances and business landscape. We infuse this knowledge into our strategies, creating works that resonate with the local audiences and deliver impactful results.",
-      image: 3,
-    },
-  ];
+    // Define key phrases to bold (case insensitive)
+    // Order matters: longer phrases first to avoid partial matches
+    const keyPhrases =
+      locale === "id"
+        ? [
+            "Di Artique",
+            "kreativitas tidak memiliki batas",
+            "mewujudkan visi mereka",
+            "potensi penuh ",
+            "ide-ide mereka",
+            "berkomitmen ",
+            "panduan",
+            "dukungan",
+            "keahlian ",
+          ]
+        : [
+            "Artique",
+            "creativity has no bounds",
+            "we are committed to helping our clients unlock the full potential of their ideas",
+            "work closely",
+            "their vision to life",
+            "guidance, support, and expertise",
+          ];
+
+    const parts = [];
+    let currentIndex = 0;
+    let partKey = 0;
+
+    // Find and wrap key phrases with bold spans
+    while (currentIndex < about.length) {
+      let bestMatch = null;
+      let bestIndex = -1;
+      let bestLength = 0;
+
+      // Find the earliest matching key phrase (prioritize longer matches)
+      for (const phrase of keyPhrases) {
+        const escapedPhrase = phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const regex = new RegExp(escapedPhrase, "gi");
+        const remainingText = about.substring(currentIndex);
+        const match = remainingText.match(regex);
+
+        if (match) {
+          const matchText = match[0];
+          const matchIndex = about
+            .toLowerCase()
+            .indexOf(matchText.toLowerCase(), currentIndex);
+
+          // Prioritize longer matches and earlier positions
+          if (
+            matchIndex !== -1 &&
+            (bestIndex === -1 ||
+              matchIndex < bestIndex ||
+              (matchIndex === bestIndex && matchText.length > bestLength))
+          ) {
+            bestMatch = about.substring(
+              matchIndex,
+              matchIndex + matchText.length
+            );
+            bestIndex = matchIndex;
+            bestLength = matchText.length;
+          }
+        }
+      }
+
+      if (bestMatch && bestIndex !== -1) {
+        // Add text before the match
+        if (bestIndex > currentIndex) {
+          parts.push(about.substring(currentIndex, bestIndex));
+        }
+
+        // Add the bold span for the match
+        parts.push(
+          <span key={`bold-${partKey++}`} className="font-bold text-gray-800">
+            {bestMatch}
+          </span>
+        );
+
+        currentIndex = bestIndex + bestMatch.length;
+      } else {
+        // No more matches, add the rest of the text
+        parts.push(about.substring(currentIndex));
+        break;
+      }
+    }
+
+    return parts.length > 0 ? parts : [about];
+  }, [about, locale]);
+
+  // Transform mision data from GraphQL to cardData format
+  const cardData = useMemo(() => {
+    if (mision && Array.isArray(mision) && mision.length > 0) {
+      // Map mision data from GraphQL to cardData format
+      return mision.map((item, index) => ({
+        title: item.title || "",
+        description: item.description || "",
+        image: item.image?.url || index + 1, // Use URL if available, fallback to index+1
+      }));
+    }
+
+    // Fallback to hardcoded data if no mision data
+    return [
+      {
+        title: "MISSION",
+        description:
+          "Our mission is to help enterprises, brands, and thought leaders flourish and become trendsetters, transforming their products and companies into beloved brands within the market.",
+        image: 2,
+      },
+      {
+        title: "GOALS",
+        description:
+          "At Artique, we believe that creativity has no bounds, and we are committed to helping our clients unlock the full potential of their ideas. We work closely with them to bring their vision to life, providing guidance, support, and expertise every step of the way.",
+        image: 1,
+      },
+      {
+        title: "EXPERTISE",
+        description:
+          "Our expertise lies in the vibrant and dynamic Southeast Asian markets, where we have a deep understanding of the cultural nuances and business landscape. We infuse this knowledge into our strategies, creating works that resonate with the local audiences and deliver impactful results.",
+        image: 3,
+      },
+    ];
+  }, [mision]);
 
   return (
     <section
@@ -77,34 +213,7 @@ const AboutSection = () => {
             className="mx-auto text-center md:text-right text-lg sm:text-2xl text-gray-500 font-light max-w-3xl leading-relaxed"
             suppressHydrationWarning
           >
-            {[
-              "At ",
-              <span key="artique" className="font-bold text-gray-800">
-                Artique
-              </span>,
-              ", we believe that ",
-              <span key="creativity" className="font-bold text-gray-800">
-                creativity has no bounds
-              </span>,
-              ", and ",
-              <span key="committed" className="font-bold text-gray-800">
-                we are committed to helping our clients unlock the full
-                potential of their ideas.
-              </span>,
-              " ",
-              <span key="work" className="font-bold text-gray-800">
-                {"\u00A0We work closely"}
-              </span>,
-              " with them to bring ",
-              <span key="vision" className="font-bold text-gray-800">
-                their vision to life
-              </span>,
-              ", providing ",
-              <span key="guidance" className="font-bold text-gray-800">
-                guidance, support, and expertise
-              </span>,
-              "\u00A0every step of the way.",
-            ].flatMap((part, idx) => {
+            {parseAboutText.flatMap((part, idx) => {
               if (typeof part === "string") {
                 return part.split(" ").map((word, wordIdx) => {
                   if (word) {
