@@ -10,13 +10,32 @@ async function fetchBlogs(locale) {
       apiLocale = "id_ID";
     }
 
-    // Fetch from API route
+    // Get base URL - prioritize environment variables
+    let baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    
+    // During build on Vercel, use VERCEL_URL if available
+    if (!baseUrl && process.env.VERCEL_URL) {
+      baseUrl = `https://${process.env.VERCEL_URL}`;
+    }
+    
+    // If still no base URL, try to construct from headers (runtime only)
+    // For build time, we'll need to handle this differently
+    if (!baseUrl) {
+      // During build, we can't make external requests
+      // Return empty array to allow build to proceed
+      if (process.env.NODE_ENV === 'production' && !process.env.VERCEL_URL) {
+        console.warn("No base URL available during build, returning empty blogs array");
+        return [];
+      }
+      // For local development
+      baseUrl = "http://localhost:3000";
+    }
+
+    // Fetch from API route with revalidation
     const response = await fetch(
-      `${
-        process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
-      }/api/blogs?locale=${apiLocale}`,
+      `${baseUrl}/api/blogs?locale=${apiLocale}`,
       {
-        cache: "no-store",
+        next: { revalidate: 60 }, // Revalidate every 60 seconds
       }
     );
 
@@ -28,6 +47,7 @@ async function fetchBlogs(locale) {
     return blogs || [];
   } catch (error) {
     console.error("Error fetching blogs:", error);
+    // Return empty array to allow page to render
     return [];
   }
 }

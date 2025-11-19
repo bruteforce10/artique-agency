@@ -58,30 +58,42 @@ export default function ContactPage() {
   });
 
   const countryOptions = useMemo(() => {
-    const all = countryCodes.all();
-    const seen = new Set();
+    try {
+      // Safely get country codes with error handling
+      const all = countryCodes?.all?.() || [];
+      const seen = new Set();
 
-    const unique = [];
+      const unique = [];
 
-    for (const c of all) {
-      if (!c.countryCallingCode) continue;
+      for (const c of all) {
+        if (!c || !c.countryCallingCode) continue;
 
-      const dial = `+${c.countryCallingCode}`;
-      const key = `${c.countryCode}-${dial}`;
+        const dial = `+${c.countryCallingCode}`;
+        const key = `${c.countryCode}-${dial}`;
 
-      if (seen.has(key)) continue;
-      seen.add(key);
+        if (seen.has(key)) continue;
+        seen.add(key);
 
-      unique.push({
-        code: c.countryCode,
-        dial,
-        flag: c.flagEmoji,
-        name: c.countryNameEn,
-        value: key,
-      });
+        unique.push({
+          code: c.countryCode,
+          dial,
+          flag: c.flagEmoji,
+          name: c.countryNameEn,
+          value: key,
+        });
+      }
+
+      return unique.sort((a, b) => a.name.localeCompare(b.name));
+    } catch (error) {
+      console.error("Error loading country codes:", error);
+      // Return a default set of common countries as fallback
+      return [
+        { code: "US", dial: "+1", flag: "🇺🇸", name: "United States", value: "US-+1" },
+        { code: "ID", dial: "+62", flag: "🇮🇩", name: "Indonesia", value: "ID-+62" },
+        { code: "GB", dial: "+44", flag: "🇬🇧", name: "United Kingdom", value: "GB-+44" },
+        { code: "HK", dial: "+852", flag: "🇭🇰", name: "Hong Kong", value: "HK-+852" },
+      ];
     }
-
-    return unique.sort((a, b) => a.name.localeCompare(b.name));
   }, []);
 
   const [selectedCountryValue, setSelectedCountryValue] = useState(
