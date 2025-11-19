@@ -13,11 +13,14 @@ export default function PartnerSection({ partners: partnersData }) {
   const locale = useLocale();
   const sectionRef = useNavbarSection("partners", false);
 
-  // Use data from API if available, otherwise fallback to default
-  const partnerLogos = partnersData.map((partner, index) => ({
-    id: index + 1,
-    src: partner.url,
-  }));
+  // Use data from API if available, otherwise fallback to empty array
+  const partnerLogos =
+    partnersData && Array.isArray(partnersData) && partnersData.length > 0
+      ? partnersData.map((partner, index) => ({
+          id: index + 1,
+          src: partner.url,
+        }))
+      : [];
 
   return (
     <section

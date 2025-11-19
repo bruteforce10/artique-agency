@@ -29,6 +29,8 @@ export async function GET(request) {
     }
     whyTitile
     whyDescription
+    headingAboutUs
+    descriptionAboutUs
     ourClients(locales: en) {
       url
     }

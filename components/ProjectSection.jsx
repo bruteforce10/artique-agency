@@ -14,11 +14,14 @@ export default function ProjectSection({ clients: clientsData }) {
   const locale = useLocale();
   const sectionRef = useNavbarSection("projects", false);
 
-  // Use data from API if available, otherwise fallback to default
-  const displayClients = clientsData.map((client, index) => ({
-    name: `Client ${index + 1}`,
-    logo: client.url,
-  }));
+  // Use data from API if available, otherwise fallback to empty array
+  const displayClients =
+    clientsData && Array.isArray(clientsData) && clientsData.length > 0
+      ? clientsData.map((client, index) => ({
+          name: `Client ${index + 1}`,
+          logo: client.url,
+        }))
+      : [];
 
   return (
     <section

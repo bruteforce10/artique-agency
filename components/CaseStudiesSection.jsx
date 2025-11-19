@@ -8,14 +8,50 @@ import { useNavbarSection } from "./NavbarContext";
 import Link from "next/link";
 import { useLocale } from "next-intl";
 
+const defaultProjects = [
+  {
+    name: "NTT Startup Challenge",
+    image: "/project/ntt.webp",
+    description:
+      "Regional startup event terbesar di Asia Tenggara dengan 7.000+ peserta, diselenggarakan di Indonesia, Malaysia, dan Vietnam. Artique menangani perwakilan lokal, lead generation, kemitraan strategis, eksekusi event, serta media & social media management.",
+  },
+  {
+    name: "Huawei & CXO Engine",
+    image: "/project/huawei.webp",
+    description:
+      "Program eksklusif yang mendorong kolaborasi antar pemimpin industri untuk percepatan transformasi digital Indonesia. Artique mendukung pengembangan konsep, outreach mitra strategis, telemarketing, email marketing, dan eksekusi acara.",
+  },
+  {
+    name: "Erspo",
+    image: "/project/erspo.webp",
+    description:
+      "Brand sports & lifestyle terbaru dari ERIGO Group yang melakukan ekspansi ke Jepang. Artique membantu strategi penetrasi pasar melalui koneksi dengan klub sepak bola dan agensi hiburan Jepang serta mendukung eksekusi media & social media.",
+  },
+  {
+    name: "Juventus",
+    image: "/project/juventus.webp",
+    description:
+      "Representasi komersial Juventus di Asia Tenggara dengan fokus pada outreach C-Level executives di berbagai industri. Termasuk kampanye email, telemarketing strategis, dan koordinasi meeting 1:1 yang menghasilkan peluang bisnis bernilai tinggi.",
+  },
+  {
+    name: "MM Partners",
+    image: "/project/mmm.webp",
+    description:
+      "Agensi sports marketing terkemuka dari Spanyol yang mewakili klub besar seperti Real Madrid, Manchester United, dan Juventus. Artique bertindak sebagai perwakilan APAC dalam IP management, email outreach, meeting coordination, dan deal facilitation.",
+  },
+];
+
 const CaseStudiesSection = ({ caseStudies }) => {
   const locale = useLocale();
   // Use data from API if available, otherwise fallback to default
-  const projects = caseStudies.map((study) => ({
-    name: study.title || "Case Study",
-    image: study.image?.url || "/project/default.webp",
-    description: study.description || "",
-  }));
+  const projects =
+    caseStudies && Array.isArray(caseStudies) && caseStudies.length > 0
+      ? caseStudies.map((study) => ({
+          name: study.title || "Case Study",
+          image: study.image?.url || "/project/default.webp",
+          description: study.description || "",
+        }))
+      : defaultProjects;
 
   const sectionRef = useNavbarSection("case-studies", false);
   // Start at a high index so we can scroll forward infinitely
