@@ -16,31 +16,14 @@ export async function GET(request) {
   try {
     const query = gql`
      query MyQuery {
-  homes(locales: ${locale}) {
-    titleHeader
-    descriptionHeader
-    about
-    mision(locales: ${locale}) {
+  servicesPages(locales: ${locale}) {
+    heading
+    listServices {
       title
       description
       image(locales: en) {
         url
       }
-    }
-    whyTitile
-    whyDescription
-    ourClients(locales: en) {
-      url
-    }
-    caseStudies(locales: ${locale}) {
-      image(locales: en) {
-        url
-      }
-      title
-      description
-    }
-    ourPartners(locales: en) {
-      url
     }
   }
 }
@@ -49,7 +32,7 @@ export async function GET(request) {
     const response = await graphQLClient.request(query);
     return NextResponse.json(response);
   } catch (error) {
-    console.error("Error fetching homes:", error);
+    console.error("Error fetching services:", error);
     return NextResponse.json(
       { error: "Internal server error", message: error.message },
       { status: 500 }

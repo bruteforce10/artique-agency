@@ -204,7 +204,9 @@ const AboutSection = ({ about, mision }) => {
         suppressHydrationWarning
       >
         <div className="text-center" suppressHydrationWarning>
-          <span className="text-sm text-gray-400 tracking-wider">ABOUT</span>
+          <span className="text-sm text-gray-400 tracking-wider">
+            {locale === "id" ? "TENTANG" : "ABOUT"}
+          </span>
         </div>
 
         <div className="mt-6" suppressHydrationWarning>

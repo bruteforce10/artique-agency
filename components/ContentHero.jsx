@@ -114,7 +114,7 @@ export default function ContentHero({ title, description }) {
                 size="lg"
                 className="bg-primary/90 border-orange-200 border-[2px] backdrop-blur-sm text-gray-800 px-8 hover:border-amber-50 hover:bg-gray-100 sm:text-lg font-bold rounded-full group w-full sm:w-auto uppercase"
               >
-                Get started
+                {locale === "id" ? "Mulai" : "Get started"}
                 <ArrowUpRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-200" />
               </Button>
             </Link>

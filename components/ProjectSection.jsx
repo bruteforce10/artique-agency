@@ -7,18 +7,18 @@ import {
   ScrollVelocityRow,
 } from "@/components/ui/scroll-based-velocity";
 import { useNavbarSection } from "./NavbarContext";
-import Link from "next/link";
 import ButtonArrow from "./ui/ButtonArrow";
+import { useLocale } from "next-intl";
 
-const clients = [
-  { name: "Erspo", logo: "/logo-clients/erspo.avif" },
-  { name: "Huawei", logo: "/logo-clients/huawei.avif" },
-  { name: "NTT", logo: "/logo-clients/ntt.avif" },
-  { name: "Partners", logo: "/logo-clients/prtnrs.avif" },
-];
-
-export default function ProjectSection() {
+export default function ProjectSection({ clients: clientsData }) {
+  const locale = useLocale();
   const sectionRef = useNavbarSection("projects", false);
+
+  // Use data from API if available, otherwise fallback to default
+  const displayClients = clientsData.map((client, index) => ({
+    name: `Client ${index + 1}`,
+    logo: client.url,
+  }));
 
   return (
     <section
@@ -61,12 +61,12 @@ export default function ProjectSection() {
 
       <div className="max-w-6xl mx-auto px-6 sm:px-8 py-24 relative z-1">
         <h3 className="text-4xl sm:text-5xl font-bold text-gray-800 tracking-tight">
-          Our Clients
+          {locale === "id" ? "Klien Kami" : "Our Clients"}
         </h3>
 
         {/* Client Logos Grid */}
         <div className="mt-16 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10">
-          {clients.map((client, i) => (
+          {displayClients.map((client, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 30 }}
@@ -107,9 +107,14 @@ export default function ProjectSection() {
           className="mt-20 text-center"
         >
           <p className="text-sm sm:text-base mb-6">
-            Trusted by leading brands across Southeast Asia
+            {locale === "id"
+              ? "Diharapkan oleh merek terkemuka di Asia Tenggara"
+              : "Trusted by leading brands across Southeast Asia"}
           </p>
-          <ButtonArrow href="#contact" text="Become a Partner" />
+          <ButtonArrow
+            href="#contact"
+            text={locale === "id" ? "Jadi Partner" : "Become a Partner"}
+          />
         </motion.div>
       </div>
     </section>

@@ -96,10 +96,13 @@ export default async function Home({ params }) {
           />
         </Hero>
         <AboutSection about={homeData?.about} mision={homeData?.mision} />
-        <WhyChooseUs />
-        <ProjectSection />
-        <CaseStudiesSection />
-        <PartnerSection />
+        <WhyChooseUs
+          title={homeData?.whyTitile}
+          description={homeData?.whyDescription}
+        />
+        <ProjectSection clients={homeData?.ourClients} />
+        <CaseStudiesSection caseStudies={homeData?.caseStudies} />
+        <PartnerSection partners={homeData?.ourPartners} />
         <Footer />
       </div>
     </NavbarProvider>

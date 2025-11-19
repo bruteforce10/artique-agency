@@ -7,14 +7,17 @@ import {
 } from "@/components/ui/scroll-based-velocity";
 import { Marquee } from "@/components/ui/marquee";
 import { useNavbarSection } from "./NavbarContext";
+import { useLocale } from "next-intl";
 
-const partnerLogos = Array.from({ length: 9 }, (_, i) => ({
-  id: i + 1,
-  src: `/logo-partner/${i + 1}.webp`,
-}));
-
-export default function PartnerSection() {
+export default function PartnerSection({ partners: partnersData }) {
+  const locale = useLocale();
   const sectionRef = useNavbarSection("partners", false);
+
+  // Use data from API if available, otherwise fallback to default
+  const partnerLogos = partnersData.map((partner, index) => ({
+    id: index + 1,
+    src: partner.url,
+  }));
 
   return (
     <section
@@ -57,7 +60,7 @@ export default function PartnerSection() {
 
       <div className="max-w-6xl mx-auto px-6 sm:px-8 py-24 relative z-2">
         <h3 className="text-4xl sm:text-5xl font-bold text-gray-800 tracking-tight mb-12">
-          Our Partners
+          {locale === "id" ? "Partner Kami" : "Our Partners"}
         </h3>
 
         <Marquee pauseOnHover className="[--duration:30s]">

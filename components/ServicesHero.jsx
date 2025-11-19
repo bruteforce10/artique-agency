@@ -7,6 +7,7 @@ import HeroSection from "./HeroSection";
 export default function ServicesHero({
   className,
   backgroundImage = "/bg-services.webp",
+  heading,
 }) {
   return (
     <HeroSection
@@ -14,7 +15,7 @@ export default function ServicesHero({
       className={cn("pt-20 sm:pt-24", className)}
       backgroundImage={backgroundImage}
       badge="Our Services"
-      title="Diverse Solutions Tailored to Your Every Need"
+      title={heading || "Diverse Solutions Tailored to Your Every Need"}
       titleAs="h1"
     />
   );
