@@ -1,6 +1,31 @@
+"use client";
 import Image from "next/image";
+import { useState } from "react";
 
 export const CardAbout = ({ title, description, image, className = "" }) => {
+  const [imageError, setImageError] = useState(false);
+  const [imageSrc, setImageSrc] = useState(() => {
+    // Validasi dan normalisasi image source
+    if (typeof image === "string" && image.trim() !== "") {
+      // Jika string, pastikan itu URL yang valid
+      if (image.startsWith("http://") || image.startsWith("https://")) {
+        return image;
+      }
+      // Jika string tapi bukan URL, anggap sebagai path lokal
+      return image.startsWith("/") ? image : `/${image}`;
+    }
+    // Fallback ke path lokal dengan angka
+    return `/about/${image || 1}.png`;
+  });
+
+  const handleImageError = () => {
+    // Jika error, coba fallback ke placeholder atau icon default
+    if (!imageError) {
+      setImageError(true);
+      setImageSrc("/logo.webp"); // Fallback ke logo atau placeholder
+    }
+  };
+
   const noiseSvg = encodeURIComponent(`
         <svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'>
           <filter id='n'>
@@ -33,10 +58,12 @@ export const CardAbout = ({ title, description, image, className = "" }) => {
         <div className="relative z-10">
           <div className="w-20 h-20 rounded-xl bg-white/90 flex items-center justify-center shadow mb-6">
             <Image
-              src={typeof image === "string" ? image : `/about/${image}.png`}
+              src={imageSrc}
               width={64}
               height={64}
-              alt={`about-icon-${title || image}`}
+              alt={`about-icon-${title || image || "default"}`}
+              onError={handleImageError}
+              unoptimized={imageError} // Disable optimization untuk fallback image
             />
           </div>
 
