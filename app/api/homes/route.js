@@ -31,6 +31,8 @@ export async function GET(request) {
     whyDescription
     headingAboutUs
     descriptionAboutUs
+    titleHeaderCaseStudies
+    ctaTitle
     ourClients(locales: en) {
       url
     }

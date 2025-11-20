@@ -81,9 +81,9 @@ export default function PartnerSection({ partners: partnersData }) {
                   <Image
                     src={logo.src}
                     alt={`Partner logo ${logo.id}`}
-                    width={120}
-                    height={60}
-                    className="object-contain max-h-32"
+                    width={240}
+                    height={200}
+                    className="object-contain max-h-56"
                   />
                 </div>
               </div>

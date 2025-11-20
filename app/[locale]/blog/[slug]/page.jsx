@@ -48,6 +48,46 @@ async function fetchBlogBySlug(slug, locale) {
   }
 }
 
+// Ambil CTA title dari API homes
+async function fetchCTATitle(locale) {
+  try {
+    let baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    if (!baseUrl) {
+      if (process.env.VERCEL_URL) {
+        baseUrl = `https://${process.env.VERCEL_URL}`;
+      } else {
+        baseUrl = "http://localhost:3000";
+      }
+    }
+
+    const apiLocale = locale || "en";
+    const url = `${baseUrl}/api/homes?locale=${apiLocale}`;
+
+    const response = await fetch(url, {
+      next: { revalidate: 60 },
+      cache: "force-cache",
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch homes: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const homeData = data.homes?.[0];
+
+    if (!homeData) {
+      return null;
+    }
+
+    return {
+      ctaTitle: homeData.ctaTitle,
+    };
+  } catch (error) {
+    console.error("Error fetching homes from API:", error);
+    return null;
+  }
+}
+
 export async function generateMetadata({ params }) {
   const { slug, locale } = await params;
   const blog = await fetchBlogBySlug(slug, locale);
@@ -83,6 +123,7 @@ export async function generateMetadata({ params }) {
 export default async function BlogDetailPage({ params }) {
   const { slug, locale } = await params;
   const blog = await fetchBlogBySlug(slug, locale);
+  const ctaData = await fetchCTATitle(locale);
 
   if (!blog) {
     notFound();
@@ -93,7 +134,7 @@ export default async function BlogDetailPage({ params }) {
       <div>
         <NavbarComponent />
         <BlogDetailSection blog={blog} />
-        <CTASection />
+        <CTASection title={ctaData?.ctaTitle} />
         <Footer />
       </div>
     </NavbarProvider>

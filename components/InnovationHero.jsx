@@ -3,7 +3,7 @@ import Image from "next/image";
 import { motion } from "motion/react";
 import { useNavbarSection } from "./NavbarContext";
 
-export default function InnovationHero() {
+export default function InnovationHero({ title, description }) {
   const sectionRef = useNavbarSection("innovation", false);
 
   return (
@@ -21,7 +21,7 @@ export default function InnovationHero() {
             className="relative h-full "
           >
             <h1 className="text-3xl md:text-4xl text-center lg:text-left lg:text-5xl font-bold text-gray-800 leading-[1.1] tracking-tight">
-              DRIVING INNOVATION & BUILDING CONNECTIONS
+              {title || "DRIVING INNOVATION & BUILDING CONNECTIONS"}
             </h1>
             <div className="absolute max-lg:hidden inset-0 blur-[1px] opacity-10 -bottom-32 rotate-180 ">
               <Image
@@ -44,16 +44,8 @@ export default function InnovationHero() {
               className="space-y-6 sm:space-y-8"
             >
               <p className="text-gray-700 max-lg:text-center text-sm sm:text-base lg:text-lg leading-relaxed">
-                At Artique, we specialize in crafting impactful strategies and
-                executing high level projects across various industries, from
-                startup challenges to global brand expansions, our expertise
-                spans event management, strategic partnerships, and marketing
-                outreach. <br />
-                <br /> With a proven track record of success, we have
-                collaborated with world renowned organizations to drive
-                innovation and business growth. Let&apos;s explore our key
-                projects and discover how we bring visions to life through
-                creativity, strategy, and execution.
+                {description ||
+                  "At Artique, we specialize in crafting impactful strategies and executing high level projects across various industries, from startup challenges to global brand expansions, our expertise spans event management, strategic partnerships, and marketing outreach. <br /> <br /> With a proven track record of success, we have collaborated with world renowned organizations to drive innovation and business growth. Let's explore our key projects and discover how we bring visions to life through creativity, strategy, and execution."}
               </p>
             </motion.div>
           </div>

@@ -6,19 +6,19 @@ import { motion, useInView } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-
+import { useLocale } from "next-intl";
 /**
  * CTASection component - reusable CTA section with yellow background
  */
 export default function CTASection({
   className,
-  title = "GET AN ESTIMATE FOR YOUR UPCOMING PROJECT",
-  buttonText = "CONTACT",
+  title,
   buttonHref = "/contact",
   onClick,
 }) {
   const ctaRef = useRef(null);
   const isInView = useInView(ctaRef, { once: true, margin: "-100px" });
+  const locale = useLocale();
 
   return (
     <section
@@ -62,7 +62,9 @@ export default function CTASection({
                 className="bg-black text-[#FFD800] hover:bg-gray-900 px-8 py-6 text-base sm:text-lg font-semibold rounded-md uppercase tracking-wide transition-colors"
                 size="lg"
               >
-                <Link href={buttonHref}>{buttonText}</Link>
+                <Link href={buttonHref}>
+                  {locale === "id" ? "Kontak" : "Contact"}
+                </Link>
               </Button>
             ) : (
               <Link href={buttonHref}>
@@ -71,7 +73,7 @@ export default function CTASection({
                   className="bg-black text-[#FFD800] hover:bg-gray-900 px-8 py-6 text-base sm:text-lg font-semibold rounded-md uppercase tracking-wide transition-colors"
                   size="lg"
                 >
-                  {buttonText}
+                  {locale === "id" ? "Kontak" : "Contact"}
                 </Button>
               </Link>
             )}

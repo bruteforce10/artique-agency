@@ -46,7 +46,7 @@ export async function generateMetadata({ params }) {
   const { locale } = await params;
   const homeData = await fetchHomesData(locale);
 
-  const title = homeData?.titleHeader || "Artique Agency";
+  const title = "Artique Agency";
   const description =
     homeData?.descriptionHeader ||
     "At Artique, we believe that creativity has no bounds, and we are committed to helping our clients unlock the full potential of their ideas.";
