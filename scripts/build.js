@@ -20,12 +20,6 @@ if (hasApiKey) {
 
 try {
   execSync("next build", { stdio: "inherit" });
-
-  // If building for Cloudflare Pages, run the adapter
-  if (process.env.CF_PAGES || process.env.CLOUDFLARE) {
-    console.log("Building for Cloudflare Pages...");
-    execSync("npx @cloudflare/next-on-pages", { stdio: "inherit" });
-  }
 } catch (error) {
   console.error("Error building:", error.message);
   process.exit(1);

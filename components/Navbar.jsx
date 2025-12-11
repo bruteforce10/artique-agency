@@ -57,8 +57,6 @@ export function NavbarComponent() {
 
       <div className="relative w-full max-w-7xl mx-auto z-50">
         <div className="flex items-center justify-between h-16 lg:h-20">
-          {/* Logo */}
-
           <Link href="/">
             <div className="flex items-center space-x-4">
               <Image
