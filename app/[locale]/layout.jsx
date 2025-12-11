@@ -30,10 +30,11 @@ export default async function RootLayout({ children, params }) {
   setRequestLocale(locale);
 
   return (
-    <html lang="en">
+    <html lang={locale} suppressHydrationWarning>
       {/* include both the font class and the variable so the font is applied reliably */}
       <body
         className={`${inter.className ?? ""} ${inter.variable} antialiased`}
+        suppressHydrationWarning
       >
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
       </body>
