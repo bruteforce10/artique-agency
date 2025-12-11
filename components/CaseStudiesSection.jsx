@@ -48,10 +48,15 @@ const CaseStudiesSection = ({ caseStudies }) => {
     caseStudies && Array.isArray(caseStudies) && caseStudies.length > 0
       ? caseStudies.map((study) => ({
           name: study.title || "Case Study",
-          image: study.image?.url || "/project/default.webp",
+          image: study.image?.url || "/bg-projects.webp",
           description: study.description || "",
         }))
-      : defaultProjects;
+      : defaultProjects.map((project) => ({
+          ...project,
+          image: project.image.startsWith("/project/")
+            ? "/bg-projects.webp"
+            : project.image,
+        }));
 
   const sectionRef = useNavbarSection("case-studies", false);
   // Start at a high index so we can scroll forward infinitely
@@ -63,6 +68,16 @@ const CaseStudiesSection = ({ caseStudies }) => {
   const [shouldSkipAnimation, setShouldSkipAnimation] = useState(false);
   const carouselRef = useRef(null);
   const intervalRef = useRef(null);
+
+  // Helper function to get image src with fallback
+  // Since /project/ folder doesn't exist in public, use fallback image
+  const getImageSrc = (imagePath) => {
+    // If path starts with /project/ and file doesn't exist, use fallback
+    if (imagePath && imagePath.startsWith("/project/")) {
+      return "/bg-projects.webp";
+    }
+    return imagePath || "/bg-projects.webp";
+  };
 
   // Create many duplicates for seamless infinite scroll
   // We'll create enough duplicates so we can scroll continuously
@@ -294,11 +309,12 @@ const CaseStudiesSection = ({ caseStudies }) => {
                         }}
                       >
                         <Image
-                          src={project.image}
+                          src={getImageSrc(project.image)}
                           alt={project.name}
                           fill
                           className="object-cover"
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          unoptimized={project.image?.startsWith("http")}
                         />
                       </motion.div>
 
@@ -447,12 +463,13 @@ const CaseStudiesSection = ({ caseStudies }) => {
               {/* Image Section */}
               <div className="relative w-full lg:w-1/2 h-[250px] sm:h-[350px] lg:h-[600px] flex-shrink-0">
                 <Image
-                  src={projects[popupIndex].image}
+                  src={getImageSrc(projects[popupIndex].image)}
                   alt={projects[popupIndex].name}
                   fill
                   className="object-contain rounded-lg"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   priority
+                  unoptimized={projects[popupIndex].image?.startsWith("http")}
                 />
               </div>
 

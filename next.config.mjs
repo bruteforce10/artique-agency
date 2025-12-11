@@ -18,6 +18,8 @@ const nextConfig = {
         hostname: "**.hygraphusercontent.com",
       },
     ],
+    // Add fallback for image optimization errors
+    formats: ["image/webp", "image/avif"],
   },
 };
 
