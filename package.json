@@ -5,6 +5,9 @@
   "scripts": {
     "dev": "concurrently --raw \"next dev --turbo\" \"i18nexus listen\"",
     "build": "node scripts/build.js",
+    "build:cloudflare": "CLOUDFLARE=true node scripts/build.js",
+    "pages:build": "npm run build && npx @cloudflare/next-on-pages",
+    "pages:deploy": "npm run pages:build && npx wrangler pages deploy .vercel/output/static",
     "start": "next start"
   },
   "dependencies": {
@@ -33,6 +36,7 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.13.16",
     "@tailwindcss/postcss": "^4",
     "concurrently": "^9.2.1",
     "tailwindcss": "^4",

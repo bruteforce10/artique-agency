@@ -2,8 +2,10 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: process.env.CF_PAGES ? "export" : undefined,
   images: {
     dangerouslyAllowSVG: true,
+    unoptimized: process.env.CF_PAGES ? true : false,
     remotePatterns: [
       {
         protocol: "https",

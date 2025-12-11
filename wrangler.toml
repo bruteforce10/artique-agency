@@ -1,0 +1,11 @@
+name = "artique-agency"
+compatibility_date = "2025-12-11"
+pages_build_output_dir = ".vercel/output/static"
+
+[build]
+command = "npm run build"
+cwd = "."
+
+[env.production]
+pages_build_output_dir = ".vercel/output/static"
+
