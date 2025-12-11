@@ -2,7 +2,6 @@
 
 import React, { useMemo } from "react";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 import { Calendar, Clock } from "lucide-react";
 import {
   Breadcrumb,
@@ -82,13 +81,11 @@ export default function BlogDetailSection({ blog }) {
         className="relative w-full mx-auto h-64 sm:h-96 lg:h-[500px] mb-8"
         ref={heroSectionRef}
       >
-        <Image
+        <img
           src={coverImage}
           alt={title}
-          fill
-          className="object-cover"
-          priority
-          sizes="100vw"
+          className="object-cover w-full h-full"
+          style={{ objectFit: 'cover' }}
         />
       </div>
 
@@ -126,12 +123,11 @@ export default function BlogDetailSection({ blog }) {
           <div className="flex items-center gap-4">
             {creatorAvatar ? (
               <div className="relative w-12 h-12 rounded-full overflow-hidden">
-                <Image
+                <img
                   src={creatorAvatar}
                   alt={creatorNama}
-                  fill
-                  className="object-cover"
-                  sizes="48px"
+                  className="object-cover w-full h-full"
+                  style={{ objectFit: 'cover' }}
                 />
               </div>
             ) : (
@@ -269,7 +265,7 @@ const getContentFragment = (index, text, obj, type) => {
 
     case "image":
       return (
-        <Image
+        <img
           key={index}
           alt={obj.title}
           height={obj.height}

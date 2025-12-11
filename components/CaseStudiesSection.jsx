@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import Image from "next/image";
 import { X, ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
 import { useNavbarSection } from "./NavbarContext";
 import Link from "next/link";
@@ -308,13 +307,11 @@ const CaseStudiesSection = ({ caseStudies }) => {
                               : "auto",
                         }}
                       >
-                        <Image
+                        <img
                           src={getImageSrc(project.image)}
                           alt={project.name}
-                          fill
-                          className="object-cover"
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          unoptimized={project.image?.startsWith("http")}
+                          className="object-cover w-full h-full"
+                          style={{ objectFit: "cover" }}
                         />
                       </motion.div>
 
@@ -462,14 +459,11 @@ const CaseStudiesSection = ({ caseStudies }) => {
             >
               {/* Image Section */}
               <div className="relative w-full lg:w-1/2 h-[250px] sm:h-[350px] lg:h-[600px] flex-shrink-0">
-                <Image
+                <img
                   src={getImageSrc(projects[popupIndex].image)}
                   alt={projects[popupIndex].name}
-                  fill
-                  className="object-contain rounded-lg"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  priority
-                  unoptimized={projects[popupIndex].image?.startsWith("http")}
+                  className="object-contain rounded-lg w-full h-full"
+                  style={{ objectFit: "contain" }}
                 />
               </div>
 

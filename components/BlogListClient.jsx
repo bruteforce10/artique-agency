@@ -20,7 +20,6 @@ import {
   PaginationEllipsis,
 } from "@/components/ui/pagination";
 import { Search, MoreVertical } from "lucide-react";
-import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { useNavbarSection } from "./NavbarContext";
 
@@ -271,12 +270,11 @@ function BlogCard({
       <article className="bg-white rounded-lg max-h-[450px] min-h-[400px] shadow-sm border border-border overflow-hidden hover:shadow-md transition-shadow cursor-pointer">
         {/* Header Image with Overlay Text */}
         <div className="relative h-48 w-full overflow-hidden">
-          <Image
+          <img
             src={imageUrl}
             alt={title}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover w-full h-full"
+            style={{ objectFit: 'cover' }}
           />
         </div>
 
@@ -287,12 +285,11 @@ function BlogCard({
             <div className="flex items-center gap-3">
               {creatorAvatar ? (
                 <div className="relative w-10 h-10 rounded-full overflow-hidden">
-                  <Image
+                  <img
                     src={creatorAvatar}
                     alt={creatorNama}
-                    fill
-                    className="object-cover"
-                    sizes="40px"
+                    className="object-cover w-full h-full"
+                    style={{ objectFit: 'cover' }}
                   />
                 </div>
               ) : (

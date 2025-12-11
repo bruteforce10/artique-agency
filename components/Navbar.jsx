@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/sheet";
 import { IoMdMenu } from "react-icons/io";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavbarColor } from "./NavbarContext";
 import { Link } from "@/i18n/navigation";
@@ -61,11 +60,9 @@ export function NavbarComponent() {
 
           <Link href="/">
             <div className="flex items-center space-x-4">
-              <Image
+              <img
                 src="/logo.webp"
                 className="w-12 h-auto rounded-sm"
-                height={200}
-                width={200}
                 alt="artique-agency"
               />
               <span
