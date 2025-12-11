@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useState } from "react";
 
 export const CardAbout = ({ title, description, image, className = "" }) => {
@@ -56,12 +57,13 @@ export const CardAbout = ({ title, description, image, className = "" }) => {
         {/* Content wrapper with relative positioning */}
         <div className="relative z-10">
           <div className="w-20 h-20 rounded-xl bg-white/90 flex items-center justify-center shadow mb-6">
-            <img
+            <Image
               src={imageSrc}
               width={64}
               height={64}
               alt={`about-icon-${title || image || "default"}`}
               onError={handleImageError}
+              unoptimized={imageError}
             />
           </div>
 

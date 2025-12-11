@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import CTASection from "./CTASection";
 
 const ServicesSection = ({ listServices }) => {
@@ -38,11 +39,13 @@ const ServicesSection = ({ listServices }) => {
                 >
                   {/* Background Image with Grayscale and Blur Effect */}
                   <div className="absolute inset-0">
-                    <img
+                    <Image
                       src={imageUrl}
                       alt={service.title}
-                      className="object-cover grayscale w-full h-full"
-                      style={{ objectFit: 'cover' }}
+                      fill
+                      className="object-cover grayscale"
+                      sizes="100vw"
+                      priority={index < 2}
                     />
                     {/* Dark overlay for better text readability */}
                     <div className="absolute inset-0 bg-black/50" />

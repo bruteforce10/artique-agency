@@ -6,6 +6,7 @@ import { X, ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
 import { useNavbarSection } from "./NavbarContext";
 import Link from "next/link";
 import { useLocale } from "next-intl";
+import Image from "next/image";
 
 const defaultProjects = [
   {
@@ -307,11 +308,13 @@ const CaseStudiesSection = ({ caseStudies }) => {
                               : "auto",
                         }}
                       >
-                        <img
+                        <Image
                           src={getImageSrc(project.image)}
                           alt={project.name}
-                          className="object-cover w-full h-full"
-                          style={{ objectFit: "cover" }}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          unoptimized={project.image?.startsWith("http")}
                         />
                       </motion.div>
 
@@ -459,11 +462,14 @@ const CaseStudiesSection = ({ caseStudies }) => {
             >
               {/* Image Section */}
               <div className="relative w-full lg:w-1/2 h-[250px] sm:h-[350px] lg:h-[600px] flex-shrink-0">
-                <img
+                <Image
                   src={getImageSrc(projects[popupIndex].image)}
                   alt={projects[popupIndex].name}
-                  className="object-contain rounded-lg w-full h-full"
-                  style={{ objectFit: "contain" }}
+                  fill
+                  className="object-contain rounded-lg"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  priority
+                  unoptimized={projects[popupIndex].image?.startsWith("http")}
                 />
               </div>
 

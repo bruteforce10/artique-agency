@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { motion } from "motion/react";
 import { useNavbarSection } from "./NavbarContext";
 
@@ -23,11 +24,13 @@ export default function InnovationHero({ title, description }) {
               {title || "DRIVING INNOVATION & BUILDING CONNECTIONS"}
             </h1>
             <div className="absolute max-lg:hidden inset-0 blur-[1px] opacity-10 -bottom-32 rotate-180 ">
-              <img
+              <Image
                 src="/element-dotted-2.avif"
                 alt="Dotted pattern background"
-                className="object-cover w-full h-full"
-                style={{ objectFit: 'cover' }}
+                fill
+                className="object-cover"
+                priority
+                sizes="100vw"
               />
             </div>
           </motion.div>

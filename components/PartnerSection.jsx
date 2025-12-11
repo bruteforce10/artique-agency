@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import {
   ScrollVelocityContainer,
   ScrollVelocityRow,
@@ -77,11 +78,12 @@ export default function PartnerSection({ partners: partnersData }) {
 
                 {/* Partner Logo */}
                 <div className="relative z-10 w-full h-20 flex items-center justify-center filter grayscale group-hover:grayscale-0 transition-all duration-300">
-                  <img
+                  <Image
                     src={logo.src}
                     alt={`Partner logo ${logo.id}`}
-                    className="object-contain max-h-56 w-auto h-auto"
-                    style={{ maxHeight: '224px' }}
+                    width={240}
+                    height={200}
+                    className="object-contain max-h-56"
                   />
                 </div>
               </div>
