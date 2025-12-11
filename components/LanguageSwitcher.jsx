@@ -9,7 +9,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 const languages = [
@@ -58,13 +57,11 @@ export default function LanguageSwitcher({
         )}
       >
         <div className="flex items-center gap-2 flex-1 min-w-0">
-          <Image
+          <img
             src={currentLanguage.flag}
             alt={currentLanguage.label}
-            width={20}
-            height={15}
             className="rounded-sm object-cover flex-shrink-0"
-            unoptimized
+            style={{ width: '20px', height: '15px' }}
           />
           <SelectValue>{currentLanguage.label}</SelectValue>
         </div>
@@ -73,13 +70,11 @@ export default function LanguageSwitcher({
         {languages.map((language) => (
           <SelectItem key={language.value} value={language.value}>
             <div className="flex items-center gap-2">
-              <Image
+              <img
                 src={language.flag}
                 alt={language.label}
-                width={20}
-                height={15}
                 className="rounded-sm object-cover"
-                unoptimized
+                style={{ width: '20px', height: '15px' }}
               />
               <span>{language.label}</span>
             </div>

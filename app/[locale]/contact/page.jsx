@@ -26,7 +26,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import Image from "next/image";
 import * as Flags from "country-flag-icons/react/3x2";
 import { useNavbarSection } from "@/components/NavbarContext";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -195,12 +194,10 @@ function ContactPageContent({
     <div className="flex min-h-screen flex-col bg-background">
       <NavbarComponent />
       <div ref={heroSectionRef} className="w-full relative">
-        <Image
+        <img
           src="/bg-contact-us.webp"
           alt="Contact Us"
           className="w-full h-[300px] object-cover object-top"
-          width={1920}
-          height={1080}
         />
         <div className="absolute inset-0 bg-black/60" />
       </div>

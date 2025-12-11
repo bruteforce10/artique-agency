@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "motion/react";
-import Image from "next/image";
 import {
   ScrollVelocityContainer,
   ScrollVelocityRow,
@@ -88,12 +87,10 @@ export default function ProjectSection({ clients: clientsData }) {
 
                 {/* Client Logo */}
                 <div className="relative z-10 w-full h-20 flex items-center justify-center filter grayscale group-hover:grayscale-0 transition-all duration-300">
-                  <Image
+                  <img
                     src={client.logo}
                     alt={client.name}
-                    width={120}
-                    height={60}
-                    className="object-contain max-h-24"
+                    className="object-contain max-h-24 w-auto h-auto"
                   />
                 </div>
               </div>

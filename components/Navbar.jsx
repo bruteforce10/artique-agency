@@ -14,7 +14,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useNavbarColor } from "./NavbarContext";
 import { Link } from "@/i18n/navigation";
 import LanguageSwitcher from "./LanguageSwitcher";
-import Image from "next/image";
 
 export function NavbarComponent() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -59,11 +58,9 @@ export function NavbarComponent() {
         <div className="flex items-center justify-between h-16 lg:h-20">
           <Link href="/">
             <div className="flex items-center space-x-4">
-              <Image
+              <img
                 src="/logo.webp"
                 className="w-12 h-auto rounded-sm"
-                height={200}
-                width={200}
                 alt="artique-agency"
               />
               <span
