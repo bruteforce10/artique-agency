@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
+import Image from "next/image";
 import { motion, useInView } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -32,10 +33,12 @@ export default function CTASection({
 
       {/* Dotted Element Overlay */}
       <div className="absolute inset-0 opacity-20">
-        <img
+        <Image
           src="/element-dotted.webp"
           alt=""
-          className="object-cover w-full h-full"
+          fill
+          className="object-cover"
+          sizes="100vw"
         />
       </div>
 

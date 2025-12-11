@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { MapPin } from "lucide-react";
 import { IoLogoWhatsapp } from "react-icons/io";
 import { FaLinkedin } from "react-icons/fa";
@@ -15,10 +16,12 @@ export default function Footer() {
           {/* Logo Section */}
           <div className="flex flex-col items-start lg:w-auto">
             <div className="relative w-20 h-20 sm:w-24 sm:h-24 mb-4">
-              <img
+              <Image
                 src="/logo.webp"
                 alt="Artique Agency Logo"
-                className="object-contain w-full h-full"
+                fill
+                className="object-contain"
+                sizes="(max-width: 640px) 80px, 96px"
               />
             </div>
           </div>
