@@ -35,35 +35,7 @@ const AboutSection = ({ about, mision }) => {
   // Parse about text and add bold spans for key phrases
   const parseAboutText = useMemo(() => {
     if (!about) {
-      // Fallback to hardcoded text if no data
-      return [
-        "At ",
-        <span key="artique" className="font-bold text-gray-800">
-          Artique
-        </span>,
-        ", we believe that ",
-        <span key="creativity" className="font-bold text-gray-800">
-          creativity has no bounds
-        </span>,
-        ", and ",
-        <span key="committed" className="font-bold text-gray-800">
-          we are committed to helping our clients unlock the full potential of
-          their ideas.
-        </span>,
-        " ",
-        <span key="work" className="font-bold text-gray-800">
-          {"\u00A0We work closely"}
-        </span>,
-        "\u00A0with them to bring ",
-        <span key="vision" className="font-bold text-gray-800">
-          their vision to life
-        </span>,
-        ", providing ",
-        <span key="guidance" className="font-bold text-gray-800">
-          guidance, support, and expertise
-        </span>,
-        "\u00A0every step of the way.",
-      ];
+      return [];
     }
 
     // Define key phrases to bold (case insensitive)
@@ -136,9 +108,9 @@ const AboutSection = ({ about, mision }) => {
           parts.push(about.substring(currentIndex, bestIndex));
         }
 
-        // Add the bold span for the match
+        // Add the span for the match
         parts.push(
-          <span key={`bold-${partKey++}`} className="font-bold text-gray-800">
+          <span key={`bold-${partKey++}`} className="font-normal text-black">
             {bestMatch}
           </span>
         );
@@ -204,15 +176,15 @@ const AboutSection = ({ about, mision }) => {
         suppressHydrationWarning
       >
         <div className="text-center" suppressHydrationWarning>
-          <span className="text-sm text-gray-400 tracking-wider">
-            {locale === "id" ? "TENTANG" : "ABOUT"}
-          </span>
+          <h3 className="text-xl sm:text-3xl font-bold text-gray-800 tracking-tight">
+            {locale === "id" ? "Tentang Kami" : "About Us"}
+          </h3>
         </div>
 
         <div className="mt-6" suppressHydrationWarning>
           <div
             ref={scope}
-            className="mx-auto text-center md:text-right text-lg sm:text-2xl text-gray-500 font-light max-w-3xl leading-relaxed"
+            className="mx-auto text-center font-normal text-lg sm:text-xl text-black max-w-3xl leading-relaxed"
             suppressHydrationWarning
           >
             {parseAboutText.flatMap((part, idx) => {
@@ -224,7 +196,7 @@ const AboutSection = ({ about, mision }) => {
                         <motion.span
                           data-word
                           initial={{ opacity: 0, filter: "blur(10px)" }}
-                          className="inline"
+                          className="inline font-normal text-black"
                         >
                           {word}
                         </motion.span>
@@ -249,7 +221,7 @@ const AboutSection = ({ about, mision }) => {
                         <motion.span
                           data-word
                           initial={{ opacity: 0, filter: "blur(10px)" }}
-                          className={`inline ${part.props.className}`}
+                          className="inline font-normal text-black"
                         >
                           {word}
                         </motion.span>

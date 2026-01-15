@@ -1,6 +1,5 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { SpinningText } from "./ui/spinning-text";
 import { useNavbarSection } from "./NavbarContext";
 
 export default function Hero({
@@ -31,15 +30,6 @@ export default function Hero({
         </video>
         <div className={cn("relative", className)}>{children}</div>
       </div>
-
-      <SpinningText
-        reverse
-        className="text-lg font-light max-lg:hidden text-white absolute bottom-[200px] right-[180px] z-[2]"
-        duration={30}
-        radius={8}
-      >
-        learn more • earn more • grow more •
-      </SpinningText>
     </section>
   );
 }

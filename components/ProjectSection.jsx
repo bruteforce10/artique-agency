@@ -28,7 +28,7 @@ export default function ProjectSection({ clients: clientsData }) {
       ref={sectionRef}
       className="relative bg-neutral-200 w-full overflow-hidden"
     >
-      <div className="absolute inset-x-0 top-36">
+      {/* <div className="absolute inset-x-0 top-36">
         <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
           <ScrollVelocityContainer>
             <ScrollVelocityRow baseVelocity={10} direction={1}>
@@ -60,10 +60,10 @@ export default function ProjectSection({ clients: clientsData }) {
           <div className="from-neutral-200 pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r"></div>
           <div className="from-neutral-200 pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l"></div>
         </div>
-      </div>
+      </div> */}
 
       <div className="max-w-6xl mx-auto px-6 sm:px-8 py-24 relative z-1">
-        <h3 className="text-4xl sm:text-5xl font-bold text-gray-800 tracking-tight">
+        <h3 className="text-4xl sm:text-5xl font-bold text-center text-gray-800 tracking-tight">
           {locale === "id" ? "Klien Kami" : "Our Clients"}
         </h3>
 
