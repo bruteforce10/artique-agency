@@ -15,13 +15,13 @@ export default function Footer() {
         <div className="flex flex-col lg:flex-row gap-8 sm:gap-12 mb-8">
           {/* Logo Section */}
           <div className="flex flex-col items-start lg:w-auto">
-            <div className="relative w-20 h-20 sm:w-24 sm:h-24 mb-4">
+            <div className="relative w-20 h-20 sm:w-32 sm:h-32 mb-4">
               <Image
-                src="/logo.webp"
+                src="/logo-footer.webp"
                 alt="Artique Agency Logo"
                 fill
                 className="object-contain"
-                sizes="(max-width: 640px) 80px, 96px"
+                sizes="(max-width: 940px) 180px, 96px"
               />
             </div>
           </div>

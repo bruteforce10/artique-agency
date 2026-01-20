@@ -176,7 +176,7 @@ const AboutSection = ({ about, mision }) => {
         suppressHydrationWarning
       >
         <div className="text-center" suppressHydrationWarning>
-          <h3 className="text-xl sm:text-3xl font-bold text-gray-800 tracking-tight">
+          <h3 className="text-4xl sm:text-5xl font-bold text-gray-800 tracking-tight">
             {locale === "id" ? "Tentang Kami" : "About Us"}
           </h3>
         </div>

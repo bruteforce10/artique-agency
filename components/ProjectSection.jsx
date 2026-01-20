@@ -87,13 +87,13 @@ export default function ProjectSection({ clients: clientsData }) {
                 <div className="absolute -inset-px rounded-2xl bg-gradient-to-br from-yellow-400/20 via-transparent to-yellow-400/20 opacity-0 group-hover:opacity-100 transition-opacity" />
 
                 {/* Client Logo */}
-                <div className="relative z-10 w-full h-20 flex items-center justify-center filter grayscale group-hover:grayscale-0 transition-all duration-300">
+                <div className="relative z-10 w-full h-32 flex items-center justify-center filter grayscale group-hover:grayscale-0 transition-all duration-300">
                   <Image
                     src={client.logo}
                     alt={client.name}
-                    width={120}
+                    width={180}
                     height={60}
-                    className="object-contain max-h-24"
+                    className="object-contain max-h-50"
                   />
                 </div>
               </div>

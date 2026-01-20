@@ -18,7 +18,7 @@ export async function GET(request) {
      query MyQuery {
   servicesPages(locales: ${locale}) {
     heading
-    listServices {
+    listServices(first: 100) {
       title
       description
       image(locales: en) {

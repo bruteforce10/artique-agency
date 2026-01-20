@@ -37,7 +37,7 @@ export const CardAbout = ({ title, description, image, className = "" }) => {
 
   return (
     <div
-      className={`p-[2px] rounded-2xl bg-gradient-to-b from-[#FFD800]/90 via-white to-white ${className}`}
+      className={`p-[2px] rounded-2xl bg-gradient-to-b from-[#FFD800]/90  to-[#FBC62C] ${className}`}
     >
       <div className="rounded-2xl bg-gradient-to-b from-white to-white/0 p-6 sm:p-8 min-h-[300px] flex flex-col relative overflow-hidden">
         {/* Background gradient layer */}

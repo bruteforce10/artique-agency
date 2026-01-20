@@ -31,6 +31,7 @@ import * as Flags from "country-flag-icons/react/3x2";
 import { useNavbarSection } from "@/components/NavbarContext";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { CheckCircle2Icon, AlertCircleIcon } from "lucide-react";
+import { useLocale } from "next-intl";
 
 const contactSchema = z.object({
   firstName: z.string().min(1, { message: "First name is required" }),
@@ -56,6 +57,7 @@ export default function ContactPage() {
       linkedin: "",
     },
   });
+ 
 
   const countryOptions = useMemo(() => {
     try {
@@ -188,6 +190,7 @@ function ContactPageContent({
   setSubmitSuccess,
   setSubmitError,
 }) {
+  const locale = useLocale();
   const heroSectionRef = useNavbarSection("contact-hero", true);
   const navbarSectionRef = useNavbarSection("contact", false);
 
@@ -208,7 +211,7 @@ function ContactPageContent({
         <section className="grid gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] md:items-start">
           <div className="space-y-6">
             <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-              How Can We Help?
+              {locale === "id" ? "Bagaimana Kami Dapat Membantu?" : "How Can We Help?"}
             </h1>
             <div className="space-y-4 text-sm text-muted-foreground">
               <p className="max-w-md leading-relaxed">
@@ -227,10 +230,10 @@ function ContactPageContent({
           <div className="rounded-xl border bg-card/60 p-6 shadow-sm backdrop-blur-sm sm:p-8">
             <div className="mb-12 space-y-2">
               <p className="text-xs font-semibold tracking-[0.25em] text-muted-foreground">
-                CONTACT US
+                {locale === "id" ? "KONTAK" : "CONTACT"}
               </p>
               <h2 className="text-xl font-semibold tracking-tight">
-                Tell us about your next project
+                {locale === "id" ? "Beritahu kami tentang proyek berikutnya Anda" : "Tell us about your next project"}
               </h2>
             </div>
 
@@ -265,7 +268,7 @@ function ContactPageContent({
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>
-                          First name <span className="text-red-500">*</span>
+                          {locale === "id" ? "Nama Depan" : "First name"} <span className="text-red-500">*</span>
                         </FormLabel>
                         <FormControl>
                           <Input placeholder="John" {...field} />
@@ -280,7 +283,7 @@ function ContactPageContent({
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>
-                          Last name <span className="text-red-500">*</span>
+                          {locale === "id" ? "Nama Belakang" : "Last name"} <span className="text-red-500">*</span>
                         </FormLabel>
                         <FormControl>
                           <Input placeholder="Doe" {...field} />
@@ -297,7 +300,7 @@ function ContactPageContent({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Email <span className="text-red-500">*</span>
+                        {locale === "id" ? "Email" : "Email"} <span className="text-red-500">*</span>
                       </FormLabel>
                       <FormControl>
                         <Input
@@ -313,9 +316,9 @@ function ContactPageContent({
 
                 <div className="grid gap-3">
                   <FormLabel>
-                    Phone <span className="text-red-500">*</span>
+                    {locale === "id" ? "Telepon" : "Phone"} <span className="text-red-500">*</span>
                   </FormLabel>
-                  <div className="grid grid-cols-[minmax(0,0.2fr)_minmax(0,1.4fr)] gap-3">
+                  <div className="grid grid-cols-[minmax(0,0.2fr)_minmax(0,1.4fr)] gap-8">
                     <div>
                       <Select
                         value={selectedCountryValue}
@@ -383,7 +386,7 @@ function ContactPageContent({
                     />
                   </div>
                   <FormDescription>
-                    Please include your country code and phone number.
+                    {locale === "id" ? "Silakan sertakan kode negara dan nomor telepon Anda." : "Please include your country code and phone number."}
                   </FormDescription>
                 </div>
 
@@ -393,12 +396,12 @@ function ContactPageContent({
                   render={({ field }) => (
                     <FormItem ref={navbarSectionRef}>
                       <FormLabel>
-                        Message <span className="text-red-500">*</span>
+                        {locale === "id" ? "Pesan" : "Message"} <span className="text-red-500">*</span>
                       </FormLabel>
                       <FormControl>
                         <textarea
                           className="border-input dark:bg-input/30 mt-1 min-h-[120px] w-full rounded-md border bg-transparent px-3 py-2 text-sm shadow-xs outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
-                          placeholder="Tell us about your next project..."
+                          placeholder={locale === "id" ? "Beritahu kami tentang proyek berikutnya Anda..." : "Tell us about your next project..."}
                           {...field}
                         />
                       </FormControl>
@@ -412,7 +415,7 @@ function ContactPageContent({
                   name="linkedin"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>LinkedIn</FormLabel>
+                      <FormLabel>{locale === "id" ? "LinkedIn" : "LinkedIn"}</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="https://www.linkedin.com/in/username"
@@ -430,7 +433,7 @@ function ContactPageContent({
                     className="w-full sm:w-auto"
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? "Submitting..." : "Submit"}
+                    {isSubmitting ? (locale === "id" ? "Mengirim..." : "Submitting...") : (locale === "id" ? "Kirim" : "Submit")}
                   </Button>
                 </div>
               </form>

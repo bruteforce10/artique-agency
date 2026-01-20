@@ -15,13 +15,13 @@ async function fetchServicesData(locale) {
         baseUrl = "http://localhost:3000";
       }
     }
+  
 
     const apiLocale = locale || "en";
     const url = `${baseUrl}/api/services?locale=${apiLocale}`;
 
     const response = await fetch(url, {
-      next: { revalidate: 60 },
-      cache: "force-cache",
+      cache: "no-store",
     });
 
     if (!response.ok) {
