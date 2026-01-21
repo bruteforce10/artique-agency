@@ -14,8 +14,14 @@ export const CardAbout = ({ title, description, image, className = "" }) => {
       // Jika string tapi bukan URL, anggap sebagai path lokal
       return image.startsWith("/") ? image : `/${image}`;
     }
-    // Fallback ke path lokal dengan angka
-    return `/about/${image || 1}.png`;
+    // Fallback numeric -> gunakan asset yang memang ada di /public (foto landscape)
+    const idx = Number(image) || 1;
+    const fallbackMap = {
+      1: "/bg.webp",
+      2: "/bg-services.webp",
+      3: "/bg-projects.webp",
+    };
+    return fallbackMap[idx] || "/bg.webp";
   });
 
   const handleImageError = () => {
@@ -37,12 +43,9 @@ export const CardAbout = ({ title, description, image, className = "" }) => {
 
   return (
     <div
-      className={`p-[2px] rounded-2xl bg-gradient-to-b from-[#FFD800]/90  to-[#FBC62C] ${className}`}
+      className={`p-[2px] rounded-2xl ${className}`}
     >
-      <div className="rounded-2xl bg-gradient-to-b from-white to-white/0 p-6 sm:p-8 min-h-[300px] flex flex-col relative overflow-hidden">
-        {/* Background gradient layer */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#E5AF5F]/50 to-white/50 opacity-90" />
-
+      <div className="rounded-2xl bg-gradient-to-b from-white to-white/0 flex flex-col relative overflow-hidden">
         {/* grain overlay (non-interactive) */}
         <div
           aria-hidden
@@ -55,27 +58,35 @@ export const CardAbout = ({ title, description, image, className = "" }) => {
         />
 
         {/* Content wrapper with relative positioning */}
-        <div className="relative z-10">
-          <div className="w-20 h-20 rounded-xl bg-white/90 flex items-center justify-center shadow mb-6">
-            <Image
-              src={imageSrc}
-              width={64}
-              height={64}
-              alt={`about-icon-${title || image || "default"}`}
-              onError={handleImageError}
-              unoptimized={imageError}
-            />
+        <div className="relative z-10 flex flex-col h-full">
+          {/* Top image (reference layout) */}
+          <div className="px-6 sm:px-8 pt-6 sm:pt-8">
+            <div className="relative w-full h-44 sm:h-48 lg:h-55 rounded-sm overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.12)]">
+              <Image
+                src={imageSrc}
+                alt={`about-image-${title || image || "default"}`}
+                fill
+                className="object-cover"
+                onError={handleImageError}
+                unoptimized={imageError}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                priority={false}
+              />
+            </div>
           </div>
 
-          <h4 className="text-2xl font-extrabold text-gray-900 mb-3">
-            {title}
-          </h4>
+          {/* Text content */}
+          <div className="px-6 sm:px-8 pb-8 pt-6 flex flex-col flex-1">
+            <h4 className="text-3xl font-extrabold tracking-tight text-gray-900 mb-3 uppercase">
+              {title}
+            </h4>
 
-          <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
-            {description}
-          </p>
+            <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
+              {description}
+            </p>
 
-          <div className="mt-auto" />
+            <div className="mt-auto" />
+          </div>
         </div>
       </div>
     </div>

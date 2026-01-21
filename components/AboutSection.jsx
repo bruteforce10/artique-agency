@@ -184,7 +184,7 @@ const AboutSection = ({ about, mision }) => {
         <div className="mt-6" suppressHydrationWarning>
           <div
             ref={scope}
-            className="mx-auto text-center font-normal text-lg sm:text-xl text-black max-w-3xl leading-relaxed"
+            className="mx-auto text-center font-normal text-lg sm:text-xl text-black max-w-4xl leading-relaxed"
             suppressHydrationWarning
           >
             {parseAboutText.flatMap((part, idx) => {
@@ -238,19 +238,13 @@ const AboutSection = ({ about, mision }) => {
         </div>
 
         <div
-          className="sm:mt-36 mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="sm:mt-36 mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch"
           suppressHydrationWarning
         >
           {cardData.map((card, index) => {
             const classes = [];
-            // Margin classes
-            if (index === 0) classes.push("lg:mt-0");
-            else if (index === 1) classes.push("lg:-mt-10");
-            else if (index === 2) {
-              classes.push("lg:-mt-20");
-              // Card terakhir full width di tablet dan desktop
-              classes.push("sm:col-span-2 lg:col-span-1");
-            }
+            // Card terakhir full width di tablet (2 kolom), kembali normal di desktop (3 kolom)
+            if (index === 2) classes.push("sm:col-span-2 lg:col-span-1");
 
             return (
               <motion.div
@@ -263,12 +257,13 @@ const AboutSection = ({ about, mision }) => {
                   delay: index * 0.2,
                   ease: [0.22, 1, 0.36, 1],
                 }}
+                className="h-full"
               >
                 <CardAbout
                   title={card.title}
                   description={card.description}
                   image={card.image}
-                  className={classes.join(" ")}
+                  className={`h-full ${classes.join(" ")}`}
                 />
               </motion.div>
             );
