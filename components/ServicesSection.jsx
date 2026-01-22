@@ -43,7 +43,7 @@ const ServicesSection = ({ listServices }) => {
                       src={imageUrl}
                       alt={service.title}
                       fill
-                      className="object-cover grayscale"
+                      className="object-cover"
                       sizes="100vw"
                       priority={index < 2}
                     />
